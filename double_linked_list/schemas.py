@@ -13,6 +13,10 @@ representation rather than full list operations.
 """
 
 from double_linked_list.operations import core
+from double_linked_list.operations import search
+from double_linked_list.operations import insert
+from double_linked_list.operations import delete
+from double_linked_list.operations import helpers
 
 class Node:
     """
@@ -85,16 +89,259 @@ class DoubleLinkedList:
         return core.clear(self)
 
 # ----------- Insertion ------------------------------------------------------------------
+    def insert_at_head(self, value):
+        """
+        Function: inserts new node at head
+        :return: Nothing
+        """
+        new_node = Node(value)
+        return insert.insert_at_head(self, new_node)
+
+    def insert_at_tail(self, value):
+        """
+        Function: inserts new node at tail
+        :param value: new node value
+        :return: nothing
+        """
+        new_node = Node(value)
+        return insert.insert_at_tail(self, new_node)
+
+    def insert_at_index(self, index, value):
+        """
+        Function: Inserts new node at an index
+        :param index: target index
+        :param value: new node value
+        :return:
+        """
+        new_node = Node(value)
+        return insert.insert_at_index(self, index, new_node)
+
+    def insert_before_node(self, target_node_value, value):
+        """
+        Function: insert new node before node
+        :param target_node_value: target node value
+        :param value: new node value
+        :return:Nothing
+        """
+        new_node = Node(value)
+        return insert.insert_before_node(self, target_node_value, new_node)
+
+    def insert_after_node(self, target_node_value, value):
+        """
+        Function: Inserts new node after a node
+        :param target_node_value: target node value
+        :param value: new node value
+        :return: Nothing
+        """
+        new_node = Node(value)
+        return insert.insert_after_node(self, target_node_value, new_node)
+
+    def insert_before_value(self, target_value, value):
+        """
+        Function: inserts node before first occurrence of a value
+        :param target_value: target node value
+        :param value: new node value
+        :return: nothing
+        """
+        new_node = Node(value)
+        return insert.insert_before_value(self, target_value, new_node)
+
+    def insert_after_value(self, target_value, value):
+        """
+        Function: inserts node after first occurrence of a value
+        :param target_value: target node value
+        :param value: new node value
+        :return: nothing
+        """
+        new_node = Node(value)
+        return insert.insert_after_value(self, target_value, new_node)
+
+    def insert_sorted_ascending(self, value):
+        """
+        Function: Insert a new node while maintaining ascending sorted order
+        :param value: new node value
+        :return: nothing
+        """
+        new_node = Node(value)
+        return insert.insert_sorted_ascending(self, new_node)
+
+    def insert_sorted_descending(self, value):
+        """
+        Function: Insert a new node while maintaining descending sorted order
+        :param value: new node value
+        :return: nothing
+        """
+        new_node = Node(value)
+        return insert.insert_sorted_descending(self, new_node)
 
 # ----------- Deletion -------------------------------------------------------------------
+    def delete_from_head(self) -> Node:
+        """
+        Function: Delete the first node (head) of the linked list
+        :return: Deleted node if successful, otherwise None
+        """
+        return delete.delete_from_head(self)
+
+    def delete_from_tail(self) -> Node:
+        """
+        Function: Delete the last node (tail) of the linked list
+        :return: Deleted node if successful, otherwise None
+        """
+        return delete.delete_from_tail(self)
+
+    def delete_at_index(self, index: int) -> Node:
+        """
+        Function: Delete a node at a specific index
+        :param index: Zero-based position of the node to delete
+        :return: Deleted node if successful, otherwise None
+        """
+        return delete.delete_at_index(self, index)
+
+    def delete_node(self, target_node: Node) -> Node:
+        """
+        Function: Delete a specific node using direct reference
+        :param target_node: Node to be deleted
+        :return: Deleted node if successful, otherwise None
+        """
+        return delete.delete_node(self, target_node)
+
+    def delete_by_value(self, value) -> Node:
+        """
+        Function: Delete the first occurrence of a value
+        :param value: Value of the node to delete
+        :return: Deleted node if found, otherwise None
+        """
+        return delete.delete_by_value(self, value)
+
+    def delete_before_node(self, target_node: Node) -> Node:
+        """
+        Function: Delete the node immediately before a given node
+        :param target_node: Node whose previous node will be deleted
+        :return: Deleted node if successful, otherwise None
+        """
+        return delete.delete_before_node(self, target_node)
+
+    def delete_after_node(self, target_node: Node) -> Node:
+        """
+        Function: Delete the node immediately after a given node
+        :param target_node: Node whose next node will be deleted
+        :return: Deleted node if successful, otherwise None
+        """
+        return delete.delete_after_node(self, target_node)
+
+    def delete_all_occurrences(self, value) -> int:
+        """
+        Function: Delete all nodes containing a given value
+        :param value: Value to remove from the list
+        :return: Number of nodes deleted
+        """
+        return delete.delete_all_occurrences(self, value)
+
+    def clear(self) -> None:
+        """
+        Function: Delete all nodes from the linked list
+        :return: None
+        """
+        delete.delete_all_nodes(self)
 
 # ----------- Traversal ------------------------------------------------------------------
 
 # ----------- Search ---------------------------------------------------------------------
+    def search_by_value(self, value):
+        """
+        Function: searches node by value
+        :param value: target value
+        :return: node
+        """
+        return search.search_by_value(self, value)
+
+    def search_by_index(self, index):
+        """
+        Function: searches node by index
+        :param index:target index
+        :return: node
+        """
+        return search.search_by_index(self, index)
+
+    def search_first_occurrence(self, value) -> Node:
+        """
+        Function: searches first occurrence of value
+        :param value: first node with matching value
+        :return: Node
+        """
+        return search.search_first_occurrence(self, value)
+
+    def search_last_occurrence(self, value) -> Node:
+        """
+        Function: search for last occurrence of value
+        :param value:last node with matching value
+        :return: node
+        """
+        return search.search_last_occurrence(self, value)
+
+    def contains(self, value) -> bool:
+        """
+        Function: checks if value is print in linked list
+        :param value: target value
+        :return: True is value is found else False
+        """
+        return search.contains(self, value)
+
+    def get_last_node(self) -> Node :
+        """
+        Function: return last node of linked list
+        :return: last node
+        """
+        return search.get_last_node(self)
 
 # ----------- Update / Modification ------------------------------------------------------
 
 # ----------- Utility / Information ------------------------------------------------------
+    def to_list(self) -> list:
+        """
+        Function: Convert the linked list to a Python list
+        :return: List containing node values in order
+        """
+        return helpers.to_list(self)
+
+
+    def from_list(self, values):
+        """
+        Function: Create a doubly linked list from a Python list
+        :param values: Iterable of values to populate the linked list
+        :return: Doubly linked list instance
+        """
+        return helpers.from_list(self, values)
+
+    def get_length(self) -> int:
+        """
+        Function: Get the number of nodes in the linked list
+        :return: Total number of nodes
+        """
+        return helpers.get_length(self)
+
+    def get_middle_node(self):
+        """
+        Function: Get the middle node of the linked list
+        :return: Middle node if list is not empty, otherwise None
+        """
+        return helpers.get_middle_node(self)
+
+    def get_nth_from_start(self, n):
+        """
+        Function: Get the nth node from the start of the linked list
+        :param n: Zero-based index from the start
+        :return: Node at the given position if found, otherwise None
+        """
+        return helpers.get_nth_from_start(self, n)
+
+    def get_nth_from_end(self, n):
+        """
+        Function: Get the nth node from the end of the linked list
+        :param n: Zero-based index from the end
+        :return: Node at the given position if found, otherwise None
+        """
+        return helpers.get_nth_from_end(self, n)
 
 # ----------- Reordering / Structural ----------------------------------------------------
 

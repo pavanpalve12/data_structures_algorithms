@@ -65,9 +65,9 @@ def clear(dll) -> bool:
     :param dll: Doubly linked list instance
     :return: True if the list is cleared successfully, otherwise False
     """
-    dll.head = None
+    if not dll.is_empty():
+        dll.head = None
     return dll.is_empty()
-
 
 def print_linked_list(dll):
     """
@@ -82,12 +82,14 @@ def print_linked_list(dll):
 
     body = dll_info['str_repr']
     title = " Double Linked List "
-    width = max(len(body), len(title))
+    width = max(len(body), len(title)) + 8
 
-    header = f"{title.center(width + 2, '-')}"
-    footer = "-" * (width + 2)
+    header = f"{title.center(width, '-')}"
+    footer = "-" * width
     print(header)
-    print(f" {body} ")
+    print(f"\t{body}")
+    print(footer)
+    print(f"\tHead -> {dll.head.data}, Tail -> {dll.get_last_node().data}")
     print(footer)
 
 
