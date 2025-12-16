@@ -17,6 +17,8 @@ from double_linked_list.operations import search
 from double_linked_list.operations import insert
 from double_linked_list.operations import delete
 from double_linked_list.operations import helpers
+from double_linked_list.operations import traversal
+from double_linked_list.operations import update
 
 class Node:
     """
@@ -245,6 +247,35 @@ class DoubleLinkedList:
         delete.delete_all_nodes(self)
 
 # ----------- Traversal ------------------------------------------------------------------
+    def traverse_forward(self):
+        """
+        Function: Traverse from head to tail
+        :return: None
+        """
+        return traversal.traverse_forward(self)
+
+    def traverse_backward(self):
+        """
+        Function: Traverse from tail to head
+        :return: None
+        """
+        return traversal.traverse_backward(self)
+
+    def traverse_from_node_forward(self, node):
+        """
+        Function: Traverse forward from a given node
+        :param node: Starting node
+        :return: None
+        """
+        return traversal.traverse_from_node_forward(self, node)
+
+    def traverse_from_node_backward(self, node):
+        """
+        Function: Traverse backward from a given node
+        :param node: Starting node
+        :return: None
+        """
+        return traversal.traverse_from_node_backward(self, node)
 
 # ----------- Search ---------------------------------------------------------------------
     def search_by_value(self, value):
@@ -295,15 +326,58 @@ class DoubleLinkedList:
         return search.get_last_node(self)
 
 # ----------- Update / Modification ------------------------------------------------------
+    def update_node_value(self, node, new_value):
+        """
+        Function: Update the value stored in a given node
+        :param node: Node whose value will be updated
+        :param new_value: New value to assign to the node
+        :return: None
+        """
+        return update.update_node_value(self, node, new_value)
 
-# ----------- Utility / Information ------------------------------------------------------
+    def update_value_at_position(self, position, new_value):
+        """
+        Function: Update the value at a given position
+        :param position: Zero-based index in the list
+        :param new_value: New value to assign
+        :return: None
+        """
+        return update.update_value_at_position(self, position, new_value)
+
+    def replace_all_occurrences(self, old_value, new_value):
+        """
+        Function: Replace all occurrences of a value in the list
+        :param old_value: Value to be replaced
+        :param new_value: Replacement value
+        :return: Number of nodes updated
+        """
+        return update.replace_all_occurrences(self, old_value, new_value)
+
+    def swap_nodes(self, node_a, node_b):
+        """
+        Function: Swap two nodes in the list
+        :param node_a: First node
+        :param node_b: Second node
+        :return: None
+        """
+        return update.swap_nodes(self, node_a, node_b)
+
+    def relink_nodes(self, node_a, node_b):
+        """
+        Function: Modify node links without changing node data
+        :param node_a: First node involved in re-linking
+        :param node_b: Second node involved in re-linking
+        :return: None
+        """
+        return update.relink_nodes(self, node_a, node_b)
+
+    # ----------- Utility / Information ------------------------------------------------------
     def to_list(self) -> list:
         """
         Function: Convert the linked list to a Python list
         :return: List containing node values in order
         """
         return helpers.to_list(self)
-
 
     def from_list(self, values):
         """

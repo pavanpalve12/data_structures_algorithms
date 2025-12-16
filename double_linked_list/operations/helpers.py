@@ -16,7 +16,6 @@ Available Functions:
 ------------------------------------------------------------------------------------
 """
 
-
 def to_list(dll) -> list:
     """
     Function: Convert the linked list to a Python list
@@ -39,7 +38,6 @@ def from_list(dll, values):
     for value in values:
         dll.insert_at_tail(value)
 
-
 def get_length(dll) -> int:
     """
     Function: Get the number of nodes in the linked list
@@ -48,7 +46,6 @@ def get_length(dll) -> int:
     """
     dll_info = dll.traverse()
     return dll_info['length']
-
 
 def get_middle_node(dll):
     """
@@ -59,8 +56,18 @@ def get_middle_node(dll):
     Note:
         For even-length lists, the second middle node is returned.
     """
-    pass
+    # 100 - 200 - 300 - 400 - 500
+    if dll.is_empty():
+        raise ValueError("Get Middle Node Failed: the link list is empty.")
 
+    slow = dll.head
+    fast = dll.head
+
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+
+    return slow
 
 def get_nth_from_start(dll, n):
     """
@@ -69,7 +76,17 @@ def get_nth_from_start(dll, n):
     :param n: Zero-based index from the start
     :return: Node at the given position if found, otherwise None
     """
-    pass
+    if dll.is_empty():
+        raise ValueError("Get Nth Failed: the linked list is empty.")
+
+    if n < 0:
+        return None
+    curr_node = dll.head
+    while curr_node and n > 0:
+        curr_node = curr_node.next
+        n -= 1
+
+    return curr_node
 
 
 def get_nth_from_end(dll, n):
@@ -79,4 +96,15 @@ def get_nth_from_end(dll, n):
     :param n: Zero-based index from the end
     :return: Node at the given position if found, otherwise None
     """
-    pass
+    if dll.is_empty():
+        raise ValueError("Get Nth Failed: the linked list is empty.")
+
+    if n < 0:
+        return None
+
+    curr_node = dll.tail
+    while curr_node and n > 0:
+        curr_node = curr_node.prev
+        n -= 1
+
+    return curr_node
