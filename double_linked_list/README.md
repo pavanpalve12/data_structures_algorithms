@@ -147,6 +147,13 @@ The `DoubleLinkedList` class exposes a rich public interface, while all operatio
 | `detect_cycle` | Detect cycles in the list |
 | `verify_head_tail_integrity` | Ensure head and tail boundaries |
 
+### Sorting Operations
+
+| Function | Description |
+|--------|------------|
+| `sort_ascending` | Sort the doubly linked list in ascending order by rearranging node links in-place |
+| `sort_descending` | Sort the doubly linked list in descending order by rearranging node links in-place |
+
 ---
 
 ## Design Principles

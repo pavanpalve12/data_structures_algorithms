@@ -94,6 +94,12 @@ Utility / Information Operations
 - get_nth_from_end -> Return the nth node from the tail
 
 ------------------------------------------------------------------------------------
+Sorting Operations
+------------------------------------------------------------------------------------
+- sort_ascending -> Sort the list in ascending order (in-place)
+- sort_descending -> Sort the list in descending order (in-place)
+
+------------------------------------------------------------------------------------
 Reordering / Structural Operations
 ------------------------------------------------------------------------------------
 - reverse -> Reverse the list in place
@@ -117,7 +123,7 @@ Validation / Integrity Checks
 Design Notes
 ------------------------------------------------------------------------------------
 - All operations preserve node identity unless explicitly deleted
-- Structural operations modify links only; node data is never copied
+- Structural and sorting operations modify links only; node data is never copied
 - Validation utilities are provided to detect corruption early
 - The implementation favors correctness and clarity over implicit behavior
 
@@ -126,7 +132,7 @@ Design Notes
 
 from double_linked_list.operations import (
     core, insert, search, delete, validations,
-    update, reorder, helpers, traversal
+    update, reorder, helpers, traversal, sort
 )
 
 class Node:
@@ -565,8 +571,33 @@ class DoubleLinkedList:
         return reorder.merge_lists(self, other_dll, mode)
 
 # ----------- Sorting --------------------------------------------------------------------
+    def sort_ascending(self):
+        """
+        Sort the doubly linked list in ascending order.
 
-# ----------- Validation / Integrity -----------------------------------------------------
+        This method delegates the sorting logic to the sort module.
+        It rearranges nodes (not just values) to maintain proper
+        prev/next pointer integrity.
+
+        Returns:
+            None
+        """
+        return sort.sort_ascending(self)
+
+    def sort_descending(self):
+        """
+        Sort the doubly linked list in descending order.
+
+        This method delegates the sorting logic to the sort module.
+        It rearranges nodes (not just values) while preserving
+        correct bidirectional links.
+
+        Returns:
+            None
+        """
+        return sort.sort_descending(self)
+
+    # ----------- Validation / Integrity -----------------------------------------------------
     def validate_dll_structure(self) -> bool:
         """
         Function: Perform a full structural validation of the doubly linked list.

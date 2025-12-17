@@ -3,19 +3,15 @@ from double_linked_list.schemas import DoubleLinkedList, Node
 
 def main():
     dll1 = DoubleLinkedList()
-    values = "A C E".split(" ")
+    values = "Z B D T U P".split(" ")
     dll1.from_list(values)
-
-    dll2 = DoubleLinkedList()
-    values = "B D".split(" ")
-    dll2.from_list(values)
-
-    dll1.print_linked_list()
-    dll2.print_linked_list()
-
-    dll1.merge(dll2, "alternate")
     dll1.print_linked_list()
 
+    dll1.sort_ascending()
+    dll1.print_linked_list()
+
+    dll1.sort_descending()
+    dll1.print_linked_list()
 
 if __name__ == "__main__":
     main()
