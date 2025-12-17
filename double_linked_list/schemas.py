@@ -19,6 +19,7 @@ from double_linked_list.operations import delete
 from double_linked_list.operations import helpers
 from double_linked_list.operations import traversal
 from double_linked_list.operations import update
+from double_linked_list.operations import validations
 
 class Node:
     """
@@ -422,6 +423,37 @@ class DoubleLinkedList:
 # ----------- Sorting --------------------------------------------------------------------
 
 # ----------- Validation / Integrity -----------------------------------------------------
+    def validate_dll_structure(self) -> bool:
+        """
+        Function: Perform a full structural validation of the doubly linked list.
+        This wrapper delegates to the validation helper module.
+        :return: True if the list passes all validation checks
+        """
+        return validations.validate_dll_structure(self)
+
+    def check_forward_backward_consistency(self) -> bool:
+        """
+        Function: Verify forward and backward link consistency for all nodes.
+        Ensures next/prev pointers are symmetric across the list.
+        :return: True if links are consistent
+        """
+        return validations.check_forward_backward_consistency(self)
+
+    def detect_cycle(self) -> bool:
+        """
+        Function: Detect cycles in the doubly linked list structure.
+        Cycles indicate corruption and invalid list state.
+        :return: True if no cycle is detected
+        """
+        return validations.detect_cycle(self)
+
+    def verify_head_tail_integrity(self) -> bool:
+        """
+        Function: Verify head and tail boundary conditions.
+        Ensures head.prev is None and tail.next is None.
+        :return: True if head and tail pointers are valid
+        """
+        return validations.verify_head_tail_integrity(self)
 
 # ----------- Conversion / Transformation ------------------------------------------------
 
