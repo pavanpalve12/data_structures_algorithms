@@ -33,6 +33,11 @@ def traverse(dll) -> dict:
     if dll.is_empty():
         raise ValueError("Traversal failed: the linked list is empty.")
 
+    # validate if dll structure is correct
+    # valid head & tail, no cycles and forward backward links are valid
+    # it will raise error if something is invalid
+    dll.validate_dll_structure()
+
     dll_info = {}
     length = 0
     values = []

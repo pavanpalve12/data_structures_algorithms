@@ -3,22 +3,131 @@
 Module Name: schemas
 ------------------------------------------------------------------------------------
 
-This module defines the core data structures required to build and manage
-a doubly linked list, including nodes with bidirectional links and a list
-container that tracks the head of the list.
+This module defines the core data structures and public API for a fully featured
+Doubly Linked List (DLL) implementation.
 
-The implementation is intentionally minimal and focuses on structural
-representation rather than full list operations.
+It provides:
+- a Node abstraction with bidirectional links
+- a DoubleLinkedList container that manages head and tail pointers
+- a comprehensive set of operations delegated to specialized submodules
+
+The design follows a clean separation of concerns:
+- the DoubleLinkedList class exposes the public interface
+- actual logic is implemented in dedicated operation modules
+- all structural integrity rules are centrally enforced
+
+------------------------------------------------------------------------------------
+Data Structures
+------------------------------------------------------------------------------------
+- Node -> Represents a single list element with prev and next references
+- DoubleLinkedList -> Container managing head and tail pointers and list state
+
+------------------------------------------------------------------------------------
+Core / Utility Operations
+------------------------------------------------------------------------------------
+- is_empty -> Check whether the list contains any nodes
+- traverse -> Traverse list and collect basic structural information
+- print_linked_list -> Print the list in a readable forward format
+- clear -> Remove all nodes and reset the list
+
+------------------------------------------------------------------------------------
+Insertion Operations
+------------------------------------------------------------------------------------
+- insert_at_head -> Insert a new node at the beginning of the list
+- insert_at_tail -> Insert a new node at the end of the list
+- insert_at_index -> Insert a new node at a specific index
+- insert_before_node -> Insert a node before a given node reference
+- insert_after_node -> Insert a node after a given node reference
+- insert_before_value -> Insert a node before the first occurrence of a value
+- insert_after_value -> Insert a node after the first occurrence of a value
+- insert_sorted_ascending -> Insert a node while maintaining ascending order
+- insert_sorted_descending -> Insert a node while maintaining descending order
+
+------------------------------------------------------------------------------------
+Deletion Operations
+------------------------------------------------------------------------------------
+- delete_from_head -> Remove and return the head node
+- delete_from_tail -> Remove and return the tail node
+- delete_at_index -> Remove and return the node at a given index
+- delete_node -> Remove a node using a direct node reference
+- delete_by_value -> Remove the first node matching a value
+- delete_before_node -> Remove the node immediately before a given node
+- delete_after_node -> Remove the node immediately after a given node
+- delete_all_occurrences -> Remove all nodes matching a value
+- clear -> Remove all nodes from the list
+
+------------------------------------------------------------------------------------
+Traversal Operations
+------------------------------------------------------------------------------------
+- traverse_forward -> Traverse nodes from head to tail
+- traverse_backward -> Traverse nodes from tail to head
+- traverse_from_node_forward -> Traverse forward starting from a given node
+- traverse_from_node_backward -> Traverse backward starting from a given node
+
+------------------------------------------------------------------------------------
+Search Operations
+------------------------------------------------------------------------------------
+- search_by_value -> Find the first node with a given value
+- search_by_index -> Find the node at a specific index
+- search_first_occurrence -> Find the first occurrence of a value
+- search_last_occurrence -> Find the last occurrence of a value
+- contains -> Check whether a value exists in the list
+- get_last_node -> Return the tail node of the list
+
+------------------------------------------------------------------------------------
+Update / Modification Operations
+------------------------------------------------------------------------------------
+- update_node_value -> Update the value stored in a specific node
+- update_value_at_position -> Update the value at a given index
+- replace_all_occurrences -> Replace all matching values in the list
+- swap_nodes -> Swap the positions of two nodes
+- relink_nodes -> Move a node before another node without changing data
+
+------------------------------------------------------------------------------------
+Utility / Information Operations
+------------------------------------------------------------------------------------
+- to_list -> Convert the linked list to a Python list
+- from_list -> Populate the list from a Python iterable
+- get_length -> Return the number of nodes in the list
+- get_middle_node -> Return the middle node of the list
+- get_nth_from_start -> Return the nth node from the head
+- get_nth_from_end -> Return the nth node from the tail
+
+------------------------------------------------------------------------------------
+Reordering / Structural Operations
+------------------------------------------------------------------------------------
+- reverse -> Reverse the list in place
+- rotate -> Rotate the list left or right by k positions
+- split -> Split the list into two independent lists at a given index
+- merge -> Merge another list using append or alternate strategy
+
+    Supported merge modes:
+    - append -> Append the second list to the end of the first
+    - alternate -> Interleave nodes from both lists
+
+------------------------------------------------------------------------------------
+Validation / Integrity Checks
+------------------------------------------------------------------------------------
+- validate_dll_structure -> Run all structural integrity validations
+- check_forward_backward_consistency -> Verify next/prev pointer symmetry
+- detect_cycle -> Detect cycles in the list
+- verify_head_tail_integrity -> Ensure head.prev and tail.next are None
+
+------------------------------------------------------------------------------------
+Design Notes
+------------------------------------------------------------------------------------
+- All operations preserve node identity unless explicitly deleted
+- Structural operations modify links only; node data is never copied
+- Validation utilities are provided to detect corruption early
+- The implementation favors correctness and clarity over implicit behavior
+
 ------------------------------------------------------------------------------------
 """
 
-from double_linked_list.operations import core
-from double_linked_list.operations import search
-from double_linked_list.operations import insert
-from double_linked_list.operations import delete
-from double_linked_list.operations import helpers
-from double_linked_list.operations import traversal
-from double_linked_list.operations import update
+from double_linked_list.operations import (
+    core, insert, search, delete, validations,
+    update, reorder, helpers, traversal
+)
 
 class Node:
     """
@@ -418,13 +527,75 @@ class DoubleLinkedList:
         return helpers.get_nth_from_end(self, n)
 
 # ----------- Reordering / Structural ----------------------------------------------------
+    def reverse(self) -> None:
+        """
+        Function: Reverse the doubly linked list in place.
+        After execution, the head becomes the tail and the order is fully reversed.
+        :return: None
+        """
+        return reorder.reverse_list(self)
+
+    def rotate(self, k: int) -> None:
+        """
+        Function: Rotate the doubly linked list by k positions.
+        Positive k rotates to the right, negative k rotates to the left.
+        :param k: Number of positions to rotate
+        :return: None
+        """
+        return reorder.rotate_list(self, k)
+
+    def split(self, position: int, new_dll):
+        """
+        Function: Split the doubly linked list at the given position.
+        Returns two independent doubly linked lists.
+        :param position: Index at which to split the list
+        :param new_dll: Doubly linked list object for second part
+        :return: Tuple of two doubly linked list objects
+        """
+        return reorder.split_list(self, position, new_dll)
+
+    def merge(self, other_dll, mode) -> None:
+        """
+        Function: Merge another doubly linked list into this list.
+        The merge strategy is defined by the reorder implementation.
+        :param other_dll: Another doubly linked list to merge with
+        :param mode: [append or alternate]
+        :return: None
+        """
+        return reorder.merge_lists(self, other_dll, mode)
 
 # ----------- Sorting --------------------------------------------------------------------
 
 # ----------- Validation / Integrity -----------------------------------------------------
+    def validate_dll_structure(self) -> bool:
+        """
+        Function: Perform a full structural validation of the doubly linked list.
+        This wrapper delegates to the validation helper module.
+        :return: True if the list passes all validation checks
+        """
+        return validations.validate_dll_structure(self)
 
-# ----------- Conversion / Transformation ------------------------------------------------
+    def check_forward_backward_consistency(self) -> bool:
+        """
+        Function: Verify forward and backward link consistency for all nodes.
+        Ensures next/prev pointers are symmetric across the list.
+        :return: True if links are consistent
+        """
+        return validations.check_forward_backward_consistency(self)
 
-# ----------- Advanced / Use-case Specific ------------------------------------------------
+    def detect_cycle(self) -> bool:
+        """
+        Function: Detect cycles in the doubly linked list structure.
+        Cycles indicate corruption and invalid list state.
+        :return: True if no cycle is detected
+        """
+        return validations.detect_cycle(self)
 
+    def verify_head_tail_integrity(self) -> bool:
+        """
+        Function: Verify head and tail boundary conditions.
+        Ensures head.prev is None and tail.next is None.
+        :return: True if head and tail pointers are valid
+        """
+        return validations.verify_head_tail_integrity(self)
 
