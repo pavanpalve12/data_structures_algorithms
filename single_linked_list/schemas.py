@@ -1,125 +1,91 @@
 """
-Module: schemas
----------------
-Defines the foundational data structures for a singly linked list — the `Node` and
-`LinkedList` classes — and integrates them with modular operation components.
+------------------------------------------------------------------------------------
+Module Name: schemas
+------------------------------------------------------------------------------------
 
-This module serves as the **core schema layer** of the linked list package.
-It establishes the object structure (`Node`, `LinkedList`) and delegates
-implementation details to specialized operation modules.
+This module defines the core data structures and public API for a Singly Linked
+List (SLL) implementation.
 
-Integrated operation modules:
-    • core    → fundamental list utilities (traverse, print, clear, is_empty)
-    • insert  → node insertion methods (head, tail, before/after node, at index)
-    • remove  → node deletion methods (head, tail, by value, by index, all)
-    • search  → node lookup methods (by index, by value, last node)
-    • utility → extended utilities (reverse, middle, nth-from-last, merge, cycle ops)
+It provides:
+- a Node abstraction with a forward reference
+- a LinkedList container that manages the head pointer
+- a complete set of list operations delegated to specialized submodules
 
--------------------------------------------------------------------------------
-Classes
--------------------------------------------------------------------------------
+The implementation emphasizes clarity, correctness, and modularity by
+separating structural representation from operational logic.
 
-Node
-~~~~
-Represents an individual node in the linked list.
+------------------------------------------------------------------------------------
+Data Structures
+------------------------------------------------------------------------------------
+- Node -> Represents a single element containing data and a next reference
+- LinkedList -> Container managing the head pointer and exposing list operations
 
-Attributes:
-    data (Any): Value stored in the node.
-    next (Node | None): Pointer to the next node in the list.
+------------------------------------------------------------------------------------
+Core Operations
+------------------------------------------------------------------------------------
+- is_empty -> Check whether the list contains any nodes
+- traverse -> Traverse the list and return values, length, and string form
+- print_linked_list -> Print the list in forward order
+- clear -> Remove all nodes from the list
+- get_length -> Return the total number of nodes
 
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+Search Operations
+------------------------------------------------------------------------------------
+- get_last_node -> Return the last node and its previous node
+- get_node_by_value -> Find a node by its value
+- get_node_by_index -> Find a node by its index
 
-LinkedList
-~~~~~~~~~~
-Represents a singly linked list composed of `Node` objects.
+------------------------------------------------------------------------------------
+Insertion Operations
+------------------------------------------------------------------------------------
+- insert_node_at_head -> Insert a node at the beginning of the list
+- insert_node_at_end -> Insert a node at the end of the list
+- insert_node_after_node -> Insert a node after a target node
+- insert_node_before_node -> Insert a node before a target node
+- insert_node_at_index -> Insert a node at a specific index
 
-Attributes:
-    head (Node | None): The first node in the list.
+------------------------------------------------------------------------------------
+Removal Operations
+------------------------------------------------------------------------------------
+- remove_node_at_head -> Remove the first node
+- remove_node_at_end -> Remove the last node
+- remove_node_by_value -> Remove the first matching value
+- remove_node_at_index -> Remove a node at a specific index
+- remove_all_nodes -> Remove all nodes from the list
 
-Methods (grouped by category):
-------------------------------
+------------------------------------------------------------------------------------
+Utility Operations
+------------------------------------------------------------------------------------
+- reverse_linked_list -> Reverse the list in place
+- count_node_occurrences -> Count occurrences of a value
+- find_middle_node -> Find the middle node(s)
+- find_nth_from_last -> Find the nth node from the end
+- merge_two_linked_lists -> Merge two linked lists
+- detect_cycle -> Detect if the list contains a cycle
+- remove_cycle -> Remove a detected cycle
 
-**Core Operations**
-    - is_empty() -> bool
-      Check whether the list is empty.
+------------------------------------------------------------------------------------
+Helper Operations
+------------------------------------------------------------------------------------
+- to_list -> Convert the linked list to a Python list
+- from_list -> Build the list from a Python list
+- compare_lists -> Compare two linked lists for equality
+- clone -> Create a deep copy of the linked list
+- remove_duplicates -> Remove duplicate values
+- get_max -> Return the maximum value in the list
+- get_min -> Return the minimum value in the list
+- print_reverse -> Print the list in reverse order without modification
 
-    - traverse() -> dict
-      Return dictionary with keys: 'values', 'length', and 'str_repr'.
+------------------------------------------------------------------------------------
+Design Notes
+------------------------------------------------------------------------------------
+- Node identity is preserved unless explicitly removed
+- Operations manipulate links directly; data is not copied unnecessarily
+- Cycle detection and removal utilities are included
+- Logic is delegated to operation modules for maintainability and testability
 
-    - print_linked_list() -> None
-      Print the linked list in readable format.
-
-    - clear() -> bool
-      Delete all nodes and reset the list.
-
-    - get_length() -> int
-      Return and print the total number of nodes.
-
-**Search / Access Operations**
-    - get_last_node() -> tuple[Node | None, Node]
-      Return the last node and its previous node.
-
-    - get_node_by_value(target_node: int) -> tuple[Node | None, Node]
-      Find a node by value and return (previous_node, found_node).
-
-    - get_node_by_index(index: int) -> tuple[Node | None, Node]
-      Find a node by index (0-based) and return (previous_node, found_node).
-
-**Insertion Operations**
-    - insert_node_at_head(data: Any) -> None
-      Insert a new node at the beginning of the list.
-
-    - insert_node_at_end(data: Any) -> None
-      Insert a new node at the end of the list.
-
-    - insert_node_after_node(data: Any, target_node: int) -> None
-      Insert a new node after a specific node (by value).
-
-    - insert_node_before_node(data: Any, target_node: int) -> None
-      Insert a new node before a specific node (by value).
-
-    - insert_node_at_index(data: Any, index: int) -> None
-      Insert a new node at a specific position (0-based index).
-
-**Removal Operations**
-    - remove_node_at_head() -> Node
-      Remove the first node and return it.
-
-    - remove_node_at_end() -> Node
-      Remove the last node and return it.
-
-    - remove_node_by_value(target_node: int) -> Node
-      Remove a node by its value.
-
-    - remove_node_at_index(index: int) -> Node
-      Remove a node by index (0-based).
-
-    - remove_all_nodes() -> None
-      Remove all nodes from the list (alias for clear).
-
-**Utility Operations**
-    - reverse_linked_list() -> LinkedList
-      Reverse the linked list in place.
-
-    - count_node_occurrences(target_node: Any) -> int
-      Count the number of nodes with the given data value.
-
-    - find_middle_node() -> tuple[Node | None, Node]
-      Find and return the middle node(s) of the list.
-
-    - find_nth_from_last(n: int) -> Node
-      Return the n-th node from the end (1-based index).
-
-    - merge_two_linked_lists(other: LinkedList) -> Node
-      Interleave (alternate) nodes from this list and another list.
-
-    - detect_cycle() -> Node | None
-      Detect a loop in the linked list; returns the node before the loop starts.
-
-    - remove_cycle() -> LinkedList
-      Break the detected cycle by setting the linking node’s `.next = None`.
-
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
 """
 
 
