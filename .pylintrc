@@ -1,0 +1,37 @@
+[MASTER]
+ignore=tests
+extension-pkg-whitelist=
+
+[MESSAGES CONTROL]
+disable=
+    missing-module-docstring,
+    missing-function-docstring,
+    missing-class-docstring,
+    too-few-public-methods,
+    invalid-name,
+    too-many-branches,
+    too-many-statements,
+    line-too-long,
+    redefined-outer-name,
+    too-many-public-methods,
+    trailing-newlines,
+    missing-final-newline,
+    trailing-whitespace
+
+[FORMAT]
+max-line-length=100
+
+[DESIGN]
+max-args=7
+max-locals=20
+max-returns=6
+max-branches=15
+max-statements=50
+
+[BASIC]
+good-names=i,j,k,ex,db,id,curr,prev,next,dll
+
+[TYPECHECK]
+ignored-modules=
+ignored-classes=
+

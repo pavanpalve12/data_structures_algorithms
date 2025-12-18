@@ -39,7 +39,6 @@ Notes:
 """
 
 from stack.deque_stack.schemas import DequeStack
-from collections import deque
 
 def main():
     ds = DequeStack()
