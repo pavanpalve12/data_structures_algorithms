@@ -94,7 +94,7 @@ def print_linked_list(dll):
     print(header)
     print(f"\t{body}")
     print(footer)
-    print(f"\tHead -> {dll.head.data}, Tail -> {dll.get_last_node().data}")
+    print(f"\tHead → {dll.head.data}, Tail → {dll.get_last_node().data}")
     print(footer)
 
 
