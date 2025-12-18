@@ -49,6 +49,8 @@ def pop(ls) -> Any:
     :param ls: ListStack instance
     :return: Top data element if stack is not empty, otherwise None or error
     """
+    if ls.is_empty():
+        raise ValueError("Pop Failed: the stack is empty.")
     return ls.stack.pop()
 
 def peek(ls) -> Any:
@@ -57,6 +59,8 @@ def peek(ls) -> Any:
     :param ls: ListStack instance
     :return: Top data element if stack is not empty, otherwise None
     """
+    if ls.is_empty():
+        raise ValueError("Peek Failed: the stack is empty.")
     return ls.stack[-1]
 
 def is_empty(ls) -> bool:
