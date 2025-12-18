@@ -87,7 +87,7 @@ def is_empty(ds) -> bool:
     :param ds: DequeStack instance
     :return: True if stack is empty, False otherwise
     """
-    return True if ds.size() == 0 else False
+    return not ds.stack
 
 def size(ds) -> int:
     """
