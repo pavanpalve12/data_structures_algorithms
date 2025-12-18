@@ -1,107 +1,173 @@
-# ListStack — List-Based Stack Implementation
+# Stack Implementations in Python
 
-## Overview
+This document explains how a **Stack** can be implemented using three different
+underlying data structures in Python:
 
-`ListStack` is a clean and minimal implementation of a stack data structure
-backed by Python’s native list type. It follows strict **LIFO
-(Last-In-First-Out)** semantics and exposes a simple, predictable public API.
+1. Python **List**
+2. `collections.deque`
+3. **Doubly Linked List (DLL)**
 
-The design intentionally separates **interface** from **implementation**:
-the `ListStack` class defines the public-facing methods, while all operational
-logic is delegated to a dedicated operations module.
-
----
-
-## Design Principles
-
-- Clear separation of concerns
-- Minimal, explicit API
-- Predictable behavior with no hidden side effects
-- Focus on correctness and readability over cleverness
+The goal is to understand how the **same stack abstraction** is preserved while
+the **internal implementation** changes, along with its trade-offs.
 
 ---
 
-## Architecture
+## Stack Concept (Quick Recap)
 
-- `stack/schemas.py`  
-  Defines the `ListStack` public interface
+A **stack** is a linear data structure that follows the **LIFO** principle:
 
-- `stack/operations/list_stack_operations.py`  
-  Implements all stack operations and business logic
+> **Last In, First Out**
 
-- Internal state is maintained using a single Python list
-
----
-
-## Data Structure
-
-### ListStack
-
-A stack abstraction implemented using a Python list where:
-- the **end of the list** represents the **top of the stack**
-- elements are added and removed in strict LIFO order
+All operations are performed at a single end called the **top** of the stack.
 
 ---
 
 ## Core Stack Operations
 
-| Operation  | Description |
-|-----------|-------------|
-| `push`    | Insert an element at the top of the stack |
-| `pop`     | Remove and return the top element |
-| `peek`    | Return the top element without removing it |
-| `is_empty`| Check whether the stack is empty |
-| `size`    | Return the number of elements in the stack |
-| `clear`   | Remove all elements from the stack |
+| Operation | Description |
+|---------|-------------|
+| `push` | Add an element to the top |
+| `pop` | Remove and return the top element |
+| `peek` | Return the top element without removing it |
+| `is_empty` | Check whether the stack is empty |
+| `size` | Return the number of elements |
+| `clear` | Remove all elements |
+| `print` | Display stack contents (bottom → top) |
 
 ---
 
-## Utility / Output Operations
+## Implementation 1: Stack using Python List
 
-| Operation      | Description |
-|---------------|-------------|
-| `print_stack` | Print stack contents from bottom to top |
+### Key Characteristics
+- Top of stack → **end of list**
+- Uses Python’s built-in dynamic array
+- Simple, fast, and memory-efficient
+
+### Operation Mapping
+
+| Stack Operation | List Method / Behavior |
+|-----------------|------------------------|
+| `push` | `list.append(x)` |
+| `pop` | `list.pop()` |
+| `peek` | `list[-1]` |
+| `is_empty` | `len(list) == 0` |
+| `size` | `len(list)` |
+| `clear` | `list.clear()` |
+| `print` | Iterate list from index `0 → -1` |
 
 ---
-
-## Usage Example
-
+## Sample Output Representation
 ```python
-from stack.schemas import ListStack
-
-stack = ListStack()
-
-stack.push(10)
-stack.push(20)
-stack.push(30)
-
-stack.print_stack()   # [10, 20, 30]
-
-print(stack.pop())    # 30
-print(stack.peek())  # 20
-print(stack.size())  # 2
-
-stack.clear()
-print(stack.is_empty())  # True
+--------------- Stack --------------------
+    Bottom → | 100 | 300 | 400 | ← Top
+------------------------------------------
+    Bottom → 100             Top → 400
+------------------------------------------
 ```
----
-## Design Notes
-- Follows strict LIFO (Last-In-First-Out) behavior
-- No stack logic is implemented directly in the ListStack class
-- All behavior is delegated to the operations layer
-- The internal list is treated as a protected implementation detail
-- Emphasizes clarity, predictability, and correctness over shortcuts
+
+**Explanation**
+- The end of the list/deque is treated as the stack top  
+- Elements grow and shrink only from the right side  
+- No explicit pointers are required  
+
+**Visual Consistency**
+- Bottom = first inserted element  
+- Top = most recently inserted element  
+- Output is for visualization only and does not affect stack behavior
 
 ---
-## Intended Use
-This implementation is suitable for:
-- Learning and teaching data structures
-- Algorithm practice and experimentation
-- Controlled environments where readability and correctness matter
 
-For production-grade usage, consider adding:
-- Robust exception handling
-- Logging instead of print statements
-- Thread-safety if concurrent access is required
+## Implementation 2: Stack using `collections.deque`
+
+### Key Characteristics
+- Top of stack → **right end**
+- Implemented internally as a block-linked list
+- Efficient at both ends, future-proof if stack evolves
+
+### Operation Mapping
+
+| Stack Operation | Deque Method / Behavior |
+|-----------------|------------------------|
+| `push` | `deque.append(x)` |
+| `pop` | `deque.pop()` |
+| `peek` | `deque[-1]` |
+| `is_empty` | `len(deque) == 0` |
+| `size` | `len(deque)` |
+| `clear` | `deque.clear()` |
+| `print` | Iterate deque from left → right |
 
 ---
+## Sample Output Representation
+```python
+--------------- Stack --------------------
+    Bottom → | 100 | 300 | 400 | ← Top
+------------------------------------------
+    Bottom → 100             Top → 400
+------------------------------------------
+```
+
+**Explanation**
+- The end of the list/deque is treated as the stack top  
+- Elements grow and shrink only from the right side  
+- No explicit pointers are required  
+
+**Visual Consistency**
+- Bottom = first inserted element  
+- Top = most recently inserted element  
+- Output is for visualization only and does not affect stack behavior
+
+---
+
+## Implementation 3: Stack using Doubly Linked List (DLL)
+
+### Key Characteristics
+- Top of stack → **tail node**
+- Explicit node management using `prev` and `next`
+- Useful for understanding pointer-level operations
+
+### Operation Mapping
+
+| Stack Operation | DLL Behavior |
+|-----------------|--------------|
+| `push` | Insert node at `tail` |
+| `pop` | Remove node from `tail` |
+| `peek` | `tail.data` |
+| `is_empty` | `head is None` |
+| `size` | Maintained counter or traversal |
+| `clear` | Set `head = tail = None` |
+| `print` | Traverse from `head → tail` |
+
+---
+## Sample Output Representation
+```python
+---------------------- Stack ----------------------
+    Head → | 100 | ←→ | 200 | ←→ | 300 | ← Tail    
+---------------------------------------------------
+    Bottom → 100                      Top → 300    
+---------------------------------------------------
+```
+**Explanation**
+- `Head` represents the bottom of the stack  
+- `Tail` represents the top of the stack  
+- Bidirectional arrows (`←→`) indicate `prev` / `next` links
+
+---
+
+## Summary Comparison
+
+| Aspect | List | Deque | DLL |
+|------|------|-------|-----|
+| Push / Pop | O(1) amortized | O(1) | O(1) |
+| Memory Overhead | Low | Medium | High |
+| Implementation Complexity | Low | Low | High |
+| Best Use Case | Simple stack | Flexible stack / queue | Pointer-based systems |
+
+---
+
+## Final Notes
+
+- **Python List** is the best default choice for stacks.
+- **Deque** is ideal when stack behavior may evolve into queue or deque usage.
+- **Doubly Linked List** is mainly educational or used in advanced systems.
+
+> The stack abstraction remains the same — only the storage strategy changes.
