@@ -77,7 +77,7 @@ def delete_at_index(dll, index):
 
     if target_node == dll.head:
         return dll.delete_from_head()
-    elif target_node == dll.tail:
+    if target_node == dll.tail:
         return dll.delete_from_tail()
 
     prev_node = target_node.prev

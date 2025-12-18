@@ -91,7 +91,6 @@ def rotate_list(dll, k):
         print("No rotation required.")
         return
     if k > 0:
-        direction = 'right'
         # when rotating by right, we need to identify split from end to head
         # that is why we need length - knorm
         # subtract one to use 0 based index
@@ -102,7 +101,6 @@ def rotate_list(dll, k):
             f"knorm = {knorm}, split_node_index = {split_node_index}"
         )
     if k < 0:
-        direction = 'left'
         # subtract one to use 0 based index
         split_node_index = knorm - 1
         print(

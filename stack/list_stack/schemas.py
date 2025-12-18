@@ -47,8 +47,9 @@ Design Notes
 ------------------------------------------------------------------------------------
 """
 
-from stack.list_stack.operations import list_stack_operations
 from typing import Any
+from stack.list_stack.operations import list_stack_operations
+
 # ----------- Clas Stack using List ------------------------------------------------
 class ListStack:
     def __init__(self):

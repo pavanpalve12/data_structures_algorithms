@@ -60,7 +60,7 @@ def check_forward_backward_consistency(dll):
     if dll.is_empty():
         return True
 
-    dll.verify_head_tail_integrity
+    dll.verify_head_tail_integrity()
 
     curr_node = dll.head
     while curr_node:

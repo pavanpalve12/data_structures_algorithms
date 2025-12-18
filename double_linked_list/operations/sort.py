@@ -19,8 +19,6 @@ All functions expect the doubly linked list (dll) to be passed explicitly
 as the first argument.
 ------------------------------------------------------------------------------------
 """
-from typing import Any
-
 
 def sort_ascending(dll) -> None:
     """
@@ -43,7 +41,7 @@ def sort_ascending(dll) -> None:
 
     length = dll.get_length()
 
-    for itr in range(0, length - 2):
+    for _ in range(0, length - 2):
         curr_node = dll.head
         while curr_node.next:
             if curr_node.data > curr_node.next.data:
@@ -76,7 +74,7 @@ def sort_descending(dll) -> None:
 
     length = dll.get_length()
 
-    for itr in range(0, length - 2):
+    for _ in range(0, length - 2):
         curr_node = dll.head
         while curr_node.next:
             if curr_node.data < curr_node.next.data:

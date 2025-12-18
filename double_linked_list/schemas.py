@@ -354,13 +354,6 @@ class DoubleLinkedList:
         """
         return delete.delete_all_occurrences(self, value)
 
-    def clear(self) -> None:
-        """
-        Function: Delete all nodes from the linked list
-        :return: None
-        """
-        delete.delete_all_nodes(self)
-
 # ----------- Traversal ------------------------------------------------------------------
     def traverse_forward(self):
         """
@@ -629,4 +622,3 @@ class DoubleLinkedList:
         :return: True if head and tail pointers are valid
         """
         return validations.verify_head_tail_integrity(self)
-

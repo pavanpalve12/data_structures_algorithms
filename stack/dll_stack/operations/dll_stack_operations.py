@@ -144,7 +144,7 @@ def clear(dll) -> bool:
     """
     if dll.is_empty():
         return True
-    dll.head = None
+    dll.head, dll.tail = None, None
     return dll.is_empty()
 
 def print_linked_list(dll):
@@ -178,6 +178,6 @@ def print_linked_list(dll):
         f"\n\t{stack_body}"
         f"\n{footer}"
         f"\n\tBottom → {dll.head.data}"
-        f"{("Top → " + str(dll.tail.data)).rjust(width-8-len("Bottom → 100"), ' ')}"
+        f"{("Top → " + str(dll.tail.data)).rjust(width-8-len(f"Bottom → {dll.head.data}"), ' ')}"
         f"\n{footer}"
     )
