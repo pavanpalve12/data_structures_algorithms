@@ -2,9 +2,6 @@
 
 A clean, modular, and well-documented repository for mastering **Data Structures and Algorithms** in Python.  
 Each data structure is implemented from scratch with production-style code organization, clear docstrings, and testable examples.
-
----
-
 ---
 
 ## 🚀 Features
@@ -57,29 +54,30 @@ Each data structure is implemented from scratch with production-style code organ
 
 ### 🧩 Additional Highlights
 - **Fully modular architecture** – Each operation isolated in its own file for readability.  
-- **Comprehensive docstrings** – Consistent *Purpose / Args / Returns* format.  
-- **Cycle detection, merge, reverse, sort, and deduplication support.**  
-- **Helper operations** – Conversions (`to_list`, `from_list`), comparisons, and data cleanup.  
-- **Linted & formatted** – Enforced via `.pylintrc` and pre-commit hooks.  
-- **Easy testing** – Every structure ships with its own unit tests and examples.
+- **Comprehensive docstrings** – Clear, consistent documentation across modules.  
+- **Multiple implementations per data structure** to understand trade-offs.  
+- **Strict separation of concerns** – schemas, operations, and execution layers.  
+- **Easy testing & demos** – Each structure includes example usage via `main.py`.
 
 ---
 
 ## 🧱 Current Implementations
+
 | Data Structure | Status | Highlights |
-|----------------|---------|-------------|
-| **Single Linked List** | ✅ Complete | Modular, cycle-safe, test-covered |
-| **Stacks & Queues** | ⏳ Planned | Array & Linked implementations |
+|----------------|---------|------------|
+| **Singly Linked List** | ✅ Complete | Modular, cycle-safe, test-covered |
+| **Doubly Linked List** | ✅ Complete | Pointer-based, size-tracked |
+| **Stack** | ✅ Complete | List, Deque, DLL implementations |
+| **Queue** | ✅ Complete | List, Deque, DLL implementations |
 | **Trees** | ⏳ Planned | Binary tree, BST, traversal ops |
-| **Graphs** | ⏳ Planned | Adjacency list & matrix representations |
+| **Graphs** | ⏳ Planned | Adjacency list & matrix |
 
 ---
-
 
 ## 🧩 Getting Started
 ```bash
 # Clone the repo
-git clone https://github.com/<your-username>/dsa.git
+git clone https://github.com/pavanpalve12/data_structures_algorithms
 cd dsa
 
 # (Optional) create a virtual environment
@@ -88,4 +86,3 @@ source venv/bin/activate   # On Windows: venv\Scripts\activate
 
 # Install dependencies (if any)
 pip install -r requirements.txt
-    
