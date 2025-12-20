@@ -58,20 +58,23 @@ Each data structure is implemented from scratch with production-style code organ
 - **Multiple implementations per data structure** to understand trade-offs.  
 - **Strict separation of concerns** – schemas, operations, and execution layers.  
 - **Easy testing & demos** – Each structure includes example usage via `main.py`.
-
 ---
-
 ## 🧱 Current Implementations
 
 | Data Structure | Status | Highlights |
 |----------------|---------|------------|
 | **Singly Linked List** | ✅ Complete | Modular, cycle-safe, test-covered |
 | **Doubly Linked List** | ✅ Complete | Pointer-based, size-tracked |
-| **Stack** | ✅ Complete | List, Deque, DLL implementations |
-| **Queue** | ✅ Complete | List, Deque, DLL implementations |
+| **Stack (List-based)** | ✅ Complete | Simple implementation, learning-focused |
+| **Stack (Deque-based)** | ✅ Complete | Efficient push/pop, production-aligned |
+| **Stack (DLL-based)** | ✅ Complete | Pointer-driven, invariant-checked |
+| **Queue (List-based)** | ✅ Complete | FIFO via list, dequeue-cost awareness |
+| **Queue (Deque-based)** | ✅ Complete | Optimal FIFO, production-ready |
+| **Queue (DLL-based)** | ✅ Complete | Explicit head/tail control |
+| **Hash Table (List Buckets)** | ✅ Complete | Chaining via Python lists, resize-aware |
+| **Hash Table (Linked List Buckets)** | ✅ Complete | Node-based chaining, invariants enforced |
 | **Trees** | ⏳ Planned | Binary tree, BST, traversal ops |
 | **Graphs** | ⏳ Planned | Adjacency list & matrix |
-
 ---
 
 ## 🧩 Getting Started
