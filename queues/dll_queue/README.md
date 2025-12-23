@@ -110,7 +110,7 @@ This mirrors how low-level systems implement queues in languages like C/C++.
 ## Example Usage
 
 ```python
-from queue.dll_queue.schemas import DLLQueue
+from queues.dll_queue.schemas import DLLQueue
 
 queue = DLLQueue()
 queue.enqueue(100)

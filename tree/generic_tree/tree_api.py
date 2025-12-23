@@ -1,30 +1,19 @@
 """
 ------------------------------------------------------------------------------------
-Module Name: tree_api
+Module: tree_api
 ------------------------------------------------------------------------------------
 
-This module defines the **public API layer** for the linked tree library.
+Public API for interacting with a generic linked tree.
 
-It serves as the **single entry point** for all external consumers and binds
-together:
-- schema definitions (Node, Tree)
-- operational logic (insert, delete, traversal)
-- helper utilities (properties, invariant checks)
+This module acts as a **facade** over internal schema, operations,
+and helper modules. External consumers interact exclusively through
+TreeAPI.
 
-Internal modules such as `operations` and `helpers` are intentionally hidden
-behind this API to ensure:
-- clean separation of concerns
-- no circular imports
-- a stable, easy-to-use interface
-
-------------------------------------------------------------------------------------
-Design Principles
-------------------------------------------------------------------------------------
-- TreeAPI is the only class intended for direct use by consumers
-- All logic is delegated; no business logic lives here
-- API methods mirror conceptual tree operations
-- Internal structure can change without breaking consumers
-
+Design goals:
+- Value-based public interface
+- Hide Node and internal implementation details
+- Centralize access to all tree operations
+- Allow internal refactors without API breakage
 ------------------------------------------------------------------------------------
 """
 
@@ -36,100 +25,101 @@ import helpers
 
 class TreeAPI:
     """
-    Public API for interacting with a linked tree data structure.
+    Public interface for a generic linked tree.
 
-    TreeAPI encapsulates a Tree instance and exposes a **clean, high-level
-    interface** for performing tree operations without exposing internal
-    implementation details.
-
-    Responsibilities:
-    - Manage the lifecycle of a Tree instance
-    - Delegate structural mutations to the operations layer
-    - Delegate property computation and validation to the helpers layer
-    - Enforce a clear contract for tree usage
-
-    Design guarantees:
-    - Consumers never interact with operations or helpers directly
-    - All tree mutations go through controlled entry points
-    - Internal architecture can evolve without API changes
-
-    Typical usage:
-    - Create a TreeAPI instance
-    - Insert nodes and build tree structure
-    - Traverse the tree using DFS or BFS
-    - Query tree properties such as height, depth, and size
-
-    TreeAPI does not implement any algorithmic logic itself.
-    It acts strictly as a **facade** over the underlying tree system.
+    TreeAPI manages a Tree instance and exposes a safe, high-level,
+    value-based API for tree manipulation and inspection.
     """
 
-    def __init__(self):
-        pass
+    def __init__(self, data: Optional[Any] = None):
+        """
+        Initialize the tree with an optional root value.
 
-    def insert_node(self, child: Node, parent: Optional[Node]) -> None:
+        :param data: Value for the root node, or None to create an empty tree
         """
-        Purpose: Insert a node into the tree
-        :param child: Node to insert
-        :param parent: Parent node (None if root insertion)
-        :return: None
-        """
-        pass
+        root_node = Node(data) if data is not None else None
+        self.tree = Tree(root_node)
 
-    def delete_node(self, target_node: Node) -> None:
+    def insert_node(self, child_data: Any, parent_data: Any) -> None:
         """
-        Purpose: Delete a node from the tree
-        :param target_node: Node to delete
-        :return: None
-        """
-        pass
+        Insert a new node under the specified parent.
 
-    def search_node(self, target_node: Node) -> Optional[Node]:
+        :param child_data: Value for the new child node
+        :param parent_data: Value identifying the parent node
         """
-        Purpose: Search for a node in the tree
-        :param target_node: Node to search for
-        :return: Matching node if found, else None
-        """
-        pass
+        operations.insert_node(self.tree, child_data, parent_data)
 
-    def dfs_preorder(self) -> Any:
+    def delete_node(self, target_data: Any) -> None:
         """
-        Purpose: Perform preorder DFS traversal
-        :return: Traversal result
-        """
-        pass
+        Delete a node and its entire subtree.
 
-    def dfs_postorder(self) -> Any:
+        :param target_data: Value identifying the node to delete
         """
-        Purpose: Perform postorder DFS traversal
-        :return: Traversal result
-        """
-        pass
+        operations.delete_node(self.tree, target_data)
 
-    def bfs_traversal(self) -> Any:
+    def search_node(self, target_data: Any) -> Optional[Node]:
         """
-        Purpose: Perform BFS traversal
-        :return: Traversal result
-        """
-        pass
+        Search for a node by value.
 
-    def compute_height(self) -> int:
+        :param target_data: Value identifying the node
+        :return: Matching Node if found, else None
         """
-        Purpose: Compute tree height
-        :return: Height value
-        """
-        pass
+        return operations.search_node(self.tree, target_data)
 
-    def compute_depth(self, target_node: Node) -> int:
+    def dfs_preorder(self) -> list[Any]:
         """
-        Purpose: Compute depth of a node
-        :param target_node: Node whose depth is required
-        :return: Depth value
+        Perform preorder depth-first traversal.
+
+        :return: List of node values in preorder
         """
-        pass
+        return operations.dfs_preorder(self.tree.root)
+
+    def dfs_postorder(self) -> list[Any]:
+        """
+        Perform postorder depth-first traversal.
+
+        :return: List of node values in postorder
+        """
+        return operations.dfs_postorder(self.tree.root)
+
+    def bfs_traversal(self) -> list[Any]:
+        """
+        Perform breadth-first (level-order) traversal.
+
+        :return: List of node values in BFS order
+        """
+        return [] if self.tree.root is None else operations.bfs_traversal([self.tree.root])
+
+    def compute_height(self, edges: bool = False) -> int:
+        """
+        Compute the height of the tree.
+
+        :param edges: If True, measure height in edges; otherwise in levels
+        :return: Height of the tree
+        """
+        return helpers.compute_height(self.tree, edges)
+
+    def compute_depth(self, target_data: Any) -> int:
+        """
+        Compute the depth of a node identified by value.
+
+        :param target_data: Value identifying the node
+        :return: Depth of the node
+        """
+        return helpers.compute_depth(self.tree, target_data)
 
     def compute_size(self) -> int:
         """
-        Purpose: Compute total number of nodes
+        Compute the total number of nodes in the tree.
+
         :return: Node count
         """
-        pass
+        return helpers.compute_size(self.tree)
+
+    def print_tree(self) -> None:
+        """
+        Print the tree in a human-readable level-order format.
+
+        Intended for visualization and debugging only.
+        """
+        helpers.bfs_print(self.tree)

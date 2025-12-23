@@ -1,82 +1,141 @@
 """
 ------------------------------------------------------------------------------------
-Module Name: tree_operations
+Module: tree_operations
 ------------------------------------------------------------------------------------
 
-This module defines all **state-mutating operations and traversal logic**
-for a linked tree structure.
+State-mutating operations and traversal algorithms for a generic tree.
 
-The functions in this module operate on Tree and Node instances defined
-in the schema layer and are responsible for modifying tree structure.
+This module operates directly on Tree and Node objects and is invoked
+exclusively through the TreeAPI layer.
 
-------------------------------------------------------------------------------------
-Design Principles
-------------------------------------------------------------------------------------
+Design goals:
 - Stateless functional operations
-- No direct user interaction
-- All mutations routed through TreeAPI
-- Imports schema layer only
-
+- No user interaction
+- Centralized mutation logic
 ------------------------------------------------------------------------------------
 """
 
-from typing import Any, Optional
+from typing import Any, Optional, List
 from schemas import Tree, Node
+import helpers
 
 
-def insert_node(tree: Tree, child: Node, parent: Optional[Node]) -> None:
+def insert_node(tree: Tree, child_data: Any, parent_data: Any) -> None:
     """
-    Purpose: Insert a node into the tree under the specified parent
+    Insert a new node under a specified parent.
+
     :param tree: Tree instance to modify
-    :param child: Node to be inserted
-    :param parent: Parent node under which child is inserted (None if root)
-    :return: None
+    :param child_data: Value for the new child node
+    :param parent_data: Value identifying the parent node
     """
-    pass
+    if child_data is None or parent_data is None:
+        raise ValueError("Insert Failed: parent or child data is None.")
+    if helpers.is_tree_empty(tree):
+        raise LookupError("Insert Failed: the tree is empty.")
+
+    parent_node = search_node(tree, parent_data)
+    if parent_node is None:
+        raise LookupError("Insert Failed: parent node not found.")
+
+    child_node = Node(child_data)
+    parent_node.children.append(child_node)
+    child_node.parent = parent_node
+
+    helpers.check_invariants(tree)
 
 
-def delete_node(tree: Tree, target_node: Node) -> None:
+def delete_node(tree: Tree, target_data: Any) -> None:
     """
-    Purpose: Delete a target node and its entire subtree from the tree
+    Delete a node and its entire subtree.
+
     :param tree: Tree instance to modify
-    :param target_node: Node to delete
-    :return: None
+    :param target_data: Value identifying the node to delete
     """
-    pass
+    if target_data is None:
+        raise ValueError("Delete Failed: target data is None.")
+    if helpers.is_tree_empty(tree):
+        raise LookupError("Delete Failed: tree is empty.")
+
+    target_node = search_node(tree, target_data)
+    if target_node is None:
+        raise LookupError("Delete Failed: target node not found.")
+
+    if tree.root == target_node:
+        tree.root = None
+        return
+
+    parent = target_node.parent
+    parent.children.remove(target_node)
+    target_node.parent = None
+
+    helpers.check_invariants(tree)
 
 
-def search_node(tree: Tree, target_node: Node) -> Optional[Node]:
+def search_node(tree: Tree, target_data: Any) -> Optional[Node]:
     """
-    Purpose: Search for a node in the tree
-    :param tree: Tree instance to search
-    :param target_node: Node to locate
+    Search for a node by value using BFS.
+
+    :param tree: Tree instance
+    :param target_data: Value identifying the node
     :return: Matching Node if found, else None
     """
-    pass
+    if target_data is None:
+        raise ValueError("Search Failed: target data is None.")
+    if helpers.is_tree_empty(tree):
+        raise LookupError("Search Failed: the tree is empty.")
+
+    return helpers._bfs_search([tree.root], target_data)
 
 
-def dfs_preorder(root: Optional[Node]) -> Any:
+def dfs_preorder(node: Optional[Node]) -> list[Any]:
     """
-    Purpose: Perform preorder depth-first traversal
-    :param root: Root node to start traversal from
-    :return: Traversal result
+    Perform preorder depth-first traversal.
+
+    :param node: Root node of the subtree
+    :return: List of node values
     """
-    pass
+    if node is None:
+        return []
+
+    result = [node.data]
+    for child in node.children:
+        result.extend(dfs_preorder(child))
+    return result
 
 
-def dfs_postorder(root: Optional[Node]) -> Any:
+def dfs_postorder(node: Optional[Node]) -> list[Any]:
     """
-    Purpose: Perform postorder depth-first traversal
-    :param root: Root node to start traversal from
-    :return: Traversal result
+    Perform postorder depth-first traversal.
+
+    :param node: Root node of the subtree
+    :return: List of node values
     """
-    pass
+    if node is None:
+        return []
+
+    result = []
+    for child in node.children:
+        result.extend(dfs_postorder(child))
+    result.append(node.data)
+    return result
 
 
-def bfs_traversal(root: Optional[Node]) -> Any:
+def bfs_traversal(nodes: List[Node]) -> list[Any]:
     """
-    Purpose: Perform breadth-first (level-order) traversal
-    :param root: Root node to start traversal from
-    :return: Traversal result
+    Perform breadth-first (level-order) traversal.
+
+    :param nodes: Nodes at the current BFS level
+    :return: List of node values in BFS order
     """
-    pass
+    if not nodes:
+        return []
+
+    result = []
+    next_level = []
+
+    for node in nodes:
+        result.append(node.data)
+        next_level.extend(node.children)
+
+    result.extend(bfs_traversal(next_level))
+    return result

@@ -5,7 +5,7 @@ Module Name: list_queue_operations
 
 This module implements all operational logic for the ListQueue data structure.
 
-It serves as the execution layer for queue behavior while keeping the ListQueue
+It serves as the execution layer for queues behavior while keeping the ListQueue
 class itself lightweight and focused on exposing the public API.
 
 All functions in this module operate on a ListQueue instance and directly
@@ -14,7 +14,7 @@ manipulate its internal list-based storage.
 ------------------------------------------------------------------------------------
 Responsibilities
 ------------------------------------------------------------------------------------
-- Implement core queue operations (enqueue, dequeue, peek)
+- Implement core queues operations (enqueue, dequeue, peek)
 - Provide utility and state-checking operations
 - Enforce FIFO semantics and structural consistency
 - Isolate all business logic away from the container class
@@ -22,23 +22,23 @@ Responsibilities
 ------------------------------------------------------------------------------------
 Core Queue Operations
 ------------------------------------------------------------------------------------
-- enqueue -> Insert an element at the rear of the queue
-- dequeue -> Remove and return the front element of the queue
+- enqueue -> Insert an element at the rear of the queues
+- dequeue -> Remove and return the front element of the queues
 - peek -> Return the front element without removing it
-- is_empty -> Check whether the queue is empty
-- size -> Return the number of elements in the queue
-- clear -> Remove all elements from the queue
+- is_empty -> Check whether the queues is empty
+- size -> Return the number of elements in the queues
+- clear -> Remove all elements from the queues
 
 ------------------------------------------------------------------------------------
 Utility / Output Operations
 ------------------------------------------------------------------------------------
-- print_queue -> Display queue contents from front to rear
+- print_queue -> Display queues contents from front to rear
 
 ------------------------------------------------------------------------------------
 Design Notes
 ------------------------------------------------------------------------------------
 - Functions expect a ListQueue instance as the first argument
-- The internal storage is accessed via `lq.queue`
+- The internal storage is accessed via `lq.queues`
 - No function performs I/O except explicitly documented utilities
 - Each function returns predictable, explicit values
 - Error handling is minimal and intended for controlled usage
@@ -51,10 +51,10 @@ from typing import Any
 
 def enqueue(lq, data) -> bool:
     """
-    Insert an element at the rear of the queue.
+    Insert an element at the rear of the queues.
 
     :param lq: ListQueue instance on which the operation is performed
-    :param data: Element to be added to the queue
+    :param data: Element to be added to the queues
     :return: True if the element is successfully enqueued
     """
     lq.queue.append(data)
@@ -63,56 +63,56 @@ def enqueue(lq, data) -> bool:
 
 def dequeue(lq) -> Any:
     """
-    Remove and return the front element of the queue.
+    Remove and return the front element of the queues.
 
     :param lq: ListQueue instance on which the operation is performed
-    :return: The element removed from the front of the queue
+    :return: The element removed from the front of the queues
     """
     if lq.is_empty():
-        raise ValueError("Pop Failed: the queue is empty.")
+        raise ValueError("Pop Failed: the queues is empty.")
 
     return lq.queue.pop(0)
 
 
 def peek(lq) -> Any:
     """
-    Return the front element of the queue without removing it.
+    Return the front element of the queues without removing it.
 
     :param lq: ListQueue instance on which the operation is performed
-    :return: The front element of the queue
+    :return: The front element of the queues
     """
     if lq.is_empty():
-        raise ValueError("Pop Failed: the queue is empty.")
+        raise ValueError("Pop Failed: the queues is empty.")
 
     return lq.queue[0]
 
 
 def is_empty(lq) -> bool:
     """
-    Check whether the queue is empty.
+    Check whether the queues is empty.
 
     :param lq: ListQueue instance on which the operation is performed
-    :return: True if the queue is empty, False otherwise
+    :return: True if the queues is empty, False otherwise
     """
     return not lq.queue
 
 
 def size(lq) -> int:
     """
-    Return the number of elements currently in the queue.
+    Return the number of elements currently in the queues.
 
     :param lq: ListQueue instance on which the operation is performed
-    :return: Integer representing the queue size
+    :return: Integer representing the queues size
     """
     return len(lq.queue)
 
 
 def clear(lq) -> bool:
     """
-    Remove all elements from the queue.
+    Remove all elements from the queues.
 
     :param lq: ListQueue instance on which the operation is performed
-    :return: True if the queue is empty after clearing
+    :return: True if the queues is empty after clearing
     """
     lq.queue.clear()
     return lq.is_empty()
@@ -120,7 +120,7 @@ def clear(lq) -> bool:
 
 def print_queue(lq):
     """
-    Print the contents of the queue from front to rear.
+    Print the contents of the queues from front to rear.
 
     :param lq: ListQueue instance on which the operation is performed
     :return: None

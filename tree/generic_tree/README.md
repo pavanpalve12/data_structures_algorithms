@@ -31,7 +31,7 @@ generic_tree/
 └── generic_tree/
     ├── schemas.py      # Node and Tree schemas (state only, no logic)
     ├── operations.py   # Insert, delete, search, DFS/BFS traversals
-    ├── helpers.py      # Invariants and property computations
+    ├── helpers.py      # Invariants, properties, printing utilities
     ├── tree_api.py     # Public API binding schemas, operations, helpers
     └── main.py         # Entry point for testing and experimentation
 
@@ -118,7 +118,8 @@ Invariant checks are centralized in the helpers module.
 ### `helpers.py`
 - Computes tree properties (height, depth, size)
 - Validates invariants
-- Pure, side-effect-free utilities
+- Provides tree printing utilities
+- Pure, side-effect-free helpers
 
 ### `tree_api.py`
 - Public-facing API for consumers
@@ -135,13 +136,85 @@ Invariant checks are centralized in the helpers module.
 
 ## Example Usage
 
-(Example usage will be added here.)
+```python
+from tree_api import TreeAPI
+
+# Create tree with root
+tree = TreeAPI("A")
+
+# Build structure
+tree.insert_node("B", "A")
+tree.insert_node("C", "A")
+tree.insert_node("D", "A")
+
+tree.insert_node("E", "B")
+tree.insert_node("F", "B")
+
+tree.insert_node("G", "E")
+tree.insert_node("H", "E")
+
+tree.insert_node("I", "F")
+
+tree.insert_node("J", "D")
+tree.insert_node("K", "D")
+tree.insert_node("L", "D")
+
+tree.insert_node("M", "J")
+tree.insert_node("N", "J")
+
+# Search
+node = tree.search_node("C")
+print(node.data)
+
+# Print tree
+tree.print_tree()
+
+# Delete a subtree
+tree.delete_node("C")
+
+# Traversals
+print(tree.dfs_preorder())
+print(tree.dfs_postorder())
+print(tree.bfs_traversal())
+
+# Tree properties
+print(tree.compute_height())
+print(tree.compute_height(edges=True))
+print(tree.compute_depth("K"))
+print(tree.compute_size())
+```
 
 ------------------------------------------------------------------------------------
 
 ## Example Output
 
-(Example output will be added here.)
+```
+====================== Tree ======================
+Level 0: A → B, C, D
+Level 1: B → E, F
+Level 1: C → **
+Level 1: D → J, K, L
+Level 2: E → G, H
+Level 2: F → I
+Level 2: J → M, N
+Level 2: K → **
+Level 2: L → **
+Level 3: G → **
+Level 3: H → **
+Level 3: I → **
+Level 3: M → **
+Level 3: N → **
+--------------------------------------------------
+Root Node       → A
+Size            → 14
+Height (Levels) → 4
+Height (Edges)  → 3
+==================================================
+
+DFS Preorder   : A → B → E → G → H → F → I → D → J → M → N → K → L
+DFS Postorder  : G → H → E → I → F → B → M → N → J → K → L → D → A
+BFS Traversal  : A → B → D → E → F → J → K → L → G → H → I → M → N
+```
 
 ------------------------------------------------------------------------------------
 

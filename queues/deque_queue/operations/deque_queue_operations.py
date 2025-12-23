@@ -5,7 +5,7 @@ Module Name: deque_queue_operations
 
 This module implements the operational logic for the DequeQueue data structure.
 
-It acts as the execution layer for queue behavior while keeping the container
+It acts as the execution layer for queues behavior while keeping the container
 class lightweight and focused solely on exposing the public API.
 
 All functions in this module operate on a DequeQueue instance and directly
@@ -14,25 +14,25 @@ manipulate its internal deque-based storage.
 ------------------------------------------------------------------------------------
 Responsibilities
 ------------------------------------------------------------------------------------
-- Implement core queue operations (enqueue, dequeue, peek)
+- Implement core queues operations (enqueue, dequeue, peek)
 - Provide utility and state-checking operations
 - Enforce FIFO semantics
-- Isolate all queue logic away from the schema layer
+- Isolate all queues logic away from the schema layer
 
 ------------------------------------------------------------------------------------
 Core Queue Operations
 ------------------------------------------------------------------------------------
-- enqueue -> Insert an element at the rear of the queue
-- dequeue -> Remove and return the front element of the queue
+- enqueue -> Insert an element at the rear of the queues
+- dequeue -> Remove and return the front element of the queues
 - peek -> Return the front element without removing it
-- is_empty -> Check whether the queue is empty
-- size -> Return the number of elements in the queue
-- clear -> Remove all elements from the queue
+- is_empty -> Check whether the queues is empty
+- size -> Return the number of elements in the queues
+- clear -> Remove all elements from the queues
 
 ------------------------------------------------------------------------------------
 Utility / Output Operations
 ------------------------------------------------------------------------------------
-- print_queue -> Display queue contents from front to rear
+- print_queue -> Display queues contents from front to rear
 
 ------------------------------------------------------------------------------------
 Design Notes
@@ -49,7 +49,7 @@ Design Notes
 
 def enqueue(dq, data) -> bool:
     """
-    Insert an element at the rear of the queue.
+    Insert an element at the rear of the queues.
     :param dq: DequeQueue instance
     :param data: Element to be enqueued
     :return: Placeholder return value
@@ -59,12 +59,12 @@ def enqueue(dq, data) -> bool:
 
 def dequeue(dq):
     """
-    Remove and return the front element of the queue.
+    Remove and return the front element of the queues.
     :param dq: DequeQueue instance
     :return: Placeholder return value
     """
     if dq.is_empty():
-        raise ValueError("Dequeue Failed: the queue is empty.")
+        raise ValueError("Dequeue Failed: the queues is empty.")
     return dq.queue.popleft()
 
 def peek(dq):
@@ -74,14 +74,14 @@ def peek(dq):
     :return: Placeholder return value
     """
     if dq.is_empty():
-        raise ValueError("Dequeue Failed: the queue is empty.")
+        raise ValueError("Dequeue Failed: the queues is empty.")
 
     return dq.queue[0]
 
 
 def is_empty(dq):
     """
-    Check whether the queue is empty.
+    Check whether the queues is empty.
 
     :param dq: DequeQueue instance
     :return: Placeholder boolean value
@@ -91,7 +91,7 @@ def is_empty(dq):
 
 def size(dq):
     """
-    Return the number of elements in the queue.
+    Return the number of elements in the queues.
 
     :param dq: DequeQueue instance
     :return: Placeholder integer value
@@ -101,7 +101,7 @@ def size(dq):
 
 def clear(dq):
     """
-    Remove all elements from the queue.
+    Remove all elements from the queues.
     :param dq: DequeQueue instance
     :return: Placeholder boolean value
     """
@@ -111,7 +111,7 @@ def clear(dq):
 
 def print_queue(dq):
     """
-    Print the contents of the queue from front to rear.
+    Print the contents of the queues from front to rear.
 
     :param dq: DequeQueue instance
     :return: None

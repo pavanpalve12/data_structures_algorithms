@@ -1,31 +1,20 @@
 """
 ------------------------------------------------------------------------------------
-Module Name: tree_schemas
+Module: tree_schemas
 ------------------------------------------------------------------------------------
 
-This module defines the **schema layer** for a general tree implementation using
-a linked (node-based) representation.
+Schema definitions for a generic linked tree.
 
-The module is intentionally limited to **state representation only**, with no
-business logic, traversal logic, or validation logic included.
+This module defines the **data structures only** for representing a tree.
+It intentionally contains **no business logic, traversal logic, or validation**.
 
-All tree operations, traversals, and invariant enforcement are delegated to
-dedicated operations and helpers modules.
+All operations on the tree are implemented in higher-level modules
+(`tree_operations`, `tree_helpers`, `tree_api`).
 
-------------------------------------------------------------------------------------
-Design Principles
-------------------------------------------------------------------------------------
-- No operational logic in schema classes
-- No traversal or mutation logic
-- Node holds structural relationships only
-- Tree acts as a thin container for root reference
-- Single responsibility per module
-
-------------------------------------------------------------------------------------
-Data Structures
-------------------------------------------------------------------------------------
-- Node -> Represents a single tree node with parent-child relationships
-- Tree -> Represents the tree container holding the root node
+Design goals:
+- Represent structure, not behavior
+- Keep nodes lightweight and mutable
+- Enforce separation of concerns
 
 ------------------------------------------------------------------------------------
 """
@@ -35,19 +24,41 @@ from typing import Any, List, Optional
 
 class Node:
     """
-    Represents a single node in a linked tree structure.
-    Holds node data and structural relationships only.
+    Represents a single node in a generic tree.
+
+    A Node stores:
+    - its data value
+    - references to child nodes
+    - a reference to its parent node
+
+    This class contains **no traversal, validation, or mutation logic**
+    beyond maintaining structural relationships.
     """
 
-    def __init__(self):
-        pass
+    def __init__(self, data: Any):
+        """
+        Create a tree node with the given value.
+
+        :param data: Value stored in the node
+        """
+        self.data = data
+        self.children: List["Node"] = []
+        self.parent: Optional["Node"] = None
 
 
 class Tree:
     """
-    Represents a tree container holding a reference to the root node.
-    No operational logic is implemented at this layer.
+    Container object representing a tree.
+
+    The Tree holds a reference to the root node and does not
+    implement any operational logic. All tree behavior is
+    delegated to other modules.
     """
 
-    def __init__(self):
-        pass
+    def __init__(self, root_node: Optional[Node] = None):
+        """
+        Create a tree with an optional root node.
+
+        :param root_node: Root node of the tree, or None for an empty tree
+        """
+        self.root: Optional[Node] = root_node

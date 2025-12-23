@@ -1,17 +1,17 @@
 """
 Module: main
 ------------
-Entry point for testing and demonstrating a doubly linked list–based queue.
+Entry point for testing and demonstrating a doubly linked list–based queues.
 
 This script validates the behavior of the `DLLQueue` abstraction implemented
 using a doubly linked list and operational logic from `dll_queue_operations`.
 
-It demonstrates standard FIFO semantics, queue state transitions, and utility
+It demonstrates standard FIFO semantics, queues state transitions, and utility
 operations including enqueue, dequeue, peek, size inspection, and clearing
-the queue.
+the queues.
 
 Example:
-    from queue.dll_queue.schemas import DLLQueue
+    from queues.dll_queue.schemas import DLLQueue
 
     if __name__ == "__main__":
         dll = DLLQueue()
@@ -32,14 +32,14 @@ Notes:
     - Intended for learning and correctness verification, not production use
 """
 
-from queue.dll_queue.schemas import DLLQueue
+from queues.dll_queue.schemas import DLLQueue
 
 
 def main():
     """
     Execute a demonstration of DLLQueue operations.
 
-    This function creates a doubly linked list–based queue instance and performs
+    This function creates a doubly linked list–based queues instance and performs
     a sequence of enqueue, dequeue, peek, size, clear, and print operations to
     validate FIFO behavior and internal state transitions.
 
@@ -54,14 +54,14 @@ def main():
     dll.enqueue(500)
     dll.print_queue()
 
-    print(f"Is dll queue is empty? -> {'Yes' if dll.is_empty() else 'No'}")
-    print(f"Size of queue -> {dll.get_size()}")
+    print(f"Is dll queues is empty? -> {'Yes' if dll.is_empty() else 'No'}")
+    print(f"Size of queues -> {dll.get_size()}")
     print(f"Dequeued element is -> {dll.dequeue()}")
     dll.print_queue()
-    print(f"Peek in queue: {dll.peek()}")
+    print(f"Peek in queues: {dll.peek()}")
     dll.print_queue()
     dll.clear()
-    print(f"Is dll queue is empty? -> {'Yes' if dll.is_empty() else 'No'}")
+    print(f"Is dll queues is empty? -> {'Yes' if dll.is_empty() else 'No'}")
     dll.print_queue()
 
 
