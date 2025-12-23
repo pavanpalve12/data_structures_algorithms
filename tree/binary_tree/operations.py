@@ -38,7 +38,7 @@ Internal / Helper Functions
 ------------------------------------------------------------------------------------
 None
 
-(All helper utilities are defined in helpers.py)
+(All helper utilities are defined in structural_helpers.py)
 ------------------------------------------------------------------------------------
 Design Notes
 ------------------------------------------------------------------------------------
@@ -48,6 +48,11 @@ Design Notes
 - No I/O or formatting logic exists in this module
 ------------------------------------------------------------------------------------
 """
+from typing import List, Any
+
+import visual_helpers, structural_helpers
+from tree.binary_tree.schemas import Tree, Node
+
 
 # ================================================================================
 # Core Operations
@@ -72,65 +77,119 @@ def delete_node(tree_api, value) -> None:
     pass
 
 
-def search_node(tree_api, value) -> bool:
+def search_node(tree: Tree, target_value) -> Node:
     """
     Purpose: Search for a value in the binary tree
-    :param tree_api: TreeAPI instance
-    :param value: Value to search for
-    :return: True if value exists, otherwise False
+    :param tree: TreeAPI instance
+    :param target_value: Value to search for
+    :return: Node if value exists, otherwise Error
     """
-    pass
+    if structural_helpers.is_tree_empty(tree):
+        raise LookupError("Search Failed: the tree is empty.")
 
+    target_node = structural_helpers.bfs_search([tree.root], target_value)
+
+    if target_node is None:
+        raise LookupError("Search Failed: the node is not found.")
+
+    return target_node
 
 # ================================================================================
 # DFS Traversals
 # ================================================================================
-def dfs_preorder(tree_api):
+def dfs_preorder(node: Node) -> List[Any]:
     """
     Purpose: Perform preorder DFS traversal
-    :param tree_api: TreeAPI instance
+    :param node: root node of tree
     :return: Traversal result
+    root -> left -> right
     """
-    pass
+    if node is None:
+        return []
 
+    result = [node.data]
+    if node.left:
+        result.extend(dfs_preorder(node.left))
+    if node.right:
+        result.extend(dfs_preorder(node.right))
 
-def dfs_inorder(tree_api):
+    return result
+
+def dfs_inorder(node: Node) -> List[Any]:
     """
     Purpose: Perform inorder DFS traversal
-    :param tree_api: TreeAPI instance
+    :param node: root node of tree
     :return: Traversal result
+    left -> root -> right
     """
-    pass
+    if node is None:
+        return []
 
+    result = []
+    if node.left:
+        result.extend(dfs_inorder(node.left))
 
-def dfs_postorder(tree_api):
+    result.append(node.data)
+
+    if node.right:
+        result.extend(dfs_inorder(node.right))
+
+    return result
+
+def dfs_postorder(node: Node) -> List[Any]:
     """
     Purpose: Perform postorder DFS traversal
-    :param tree_api: TreeAPI instance
+    :param node: root node of tree
     :return: Traversal result
+    left -> right -> root
     """
-    pass
+    if node is None:
+        return []
+
+    result = []
+    if node.left:
+        result.extend(dfs_postorder(node.left))
+    if node.right:
+        result.extend(dfs_postorder(node.right))
+
+    result.append(node.data)
+    return result
 
 
 # ================================================================================
 # BFS Traversal
 # ================================================================================
-def bfs_level_order(tree_api):
+def bfs_level_order(level_nodes: List[Node]) -> List[Any]:
     """
     Purpose: Perform level-order BFS traversal
-    :param tree_api: TreeAPI instance
+    :param level_nodes: nodes at same level (root at beginning)
     :return: Traversal result
     """
-    pass
+    if not level_nodes:
+        return []
+
+    result = []
+    next_level = []
+    for node in level_nodes:
+        result.append(node.data)
+        children = []
+        if node.left:
+            children.append(node.left)
+        if node.right:
+            children.append(node.right)
+
+        next_level.extend(children)
+
+    return result + bfs_level_order(next_level)
 
 
 # ================================================================================
 # Utilities
 # ================================================================================
-def print_tree(tree_api) -> None:
+def print_tree(tree: Tree) -> None:
     """
     Purpose: Print tree structure
-    :param tree_api: TreeAPI instance
+    :param tree: Tree instance
     :return: None
     """
-    pass
+    return visual_helpers.print_tree(tree)
