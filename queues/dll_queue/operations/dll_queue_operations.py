@@ -5,7 +5,7 @@ Module Name: dll_queue_operations
 
 This module implements all operational logic for the DLLQueue data structure.
 
-It serves as the execution layer for queue behavior while keeping the DLLQueue
+It serves as the execution layer for queues behavior while keeping the DLLQueue
 schema lightweight and focused solely on exposing the public API.
 
 All functions in this module operate on a DLLQueue instance and directly
@@ -14,10 +14,10 @@ manipulate its underlying doubly linked list structure.
 ------------------------------------------------------------------------------------
 Responsibilities
 ------------------------------------------------------------------------------------
-- Implement core queue operations using a doubly linked list
+- Implement core queues operations using a doubly linked list
 - Maintain structural integrity of node links (next / prev)
 - Enforce FIFO (First-In-First-Out) semantics
-- Isolate all queue business logic away from the schema layer
+- Isolate all queues business logic away from the schema layer
 
 ------------------------------------------------------------------------------------
 Core Queue Operations
@@ -25,14 +25,14 @@ Core Queue Operations
 - insert_at_head -> Insert a new element at the head of the linked list
 - delete_at_tail -> Remove and return the element at the tail of the linked list
 - get_value_at_head -> Return the value at the head without removing it
-- is_empty -> Check whether the queue is empty
-- size -> Return the number of elements in the queue
-- clear -> Remove all elements from the queue
+- is_empty -> Check whether the queues is empty
+- size -> Return the number of elements in the queues
+- clear -> Remove all elements from the queues
 
 ------------------------------------------------------------------------------------
 Utility / Output Operations
 ------------------------------------------------------------------------------------
-- print_linked_list -> Print queue contents from front to rear
+- print_linked_list -> Print queues contents from front to rear
 
 ------------------------------------------------------------------------------------
 Design Notes
@@ -50,9 +50,9 @@ from typing import Any
 def insert_at_head(dll, new_node) -> bool:
     """
     Insert a new element at the head of the doubly linked list.
-    This operation corresponds to enqueue behavior in the queue abstraction.
+    This operation corresponds to enqueue behavior in the queues abstraction.
     :param dll: DLLQueue instance on which the operation is performed
-    :param new_node: Element to be inserted into the queue
+    :param new_node: Element to be inserted into the queues
     :return: return True on success else False
     """
     if dll.is_empty():
@@ -74,12 +74,12 @@ def insert_at_head(dll, new_node) -> bool:
 def delete_at_tail(dll) -> Any:
     """
     Remove and return the element at the tail of the doubly linked list.
-    This operation corresponds to dequeue behavior in the queue abstraction.
+    This operation corresponds to dequeue behavior in the queues abstraction.
     :param dll: DLLQueue instance on which the operation is performed
     :return: Placeholder return value
     """
     if dll.is_empty():
-        raise ValueError("Dequeue Failed: the queue is empty.")
+        raise ValueError("Dequeue Failed: the queues is empty.")
 
     deleted_tail = dll.tail
 
@@ -98,17 +98,17 @@ def delete_at_tail(dll) -> Any:
 def get_value_at_tail(dll) -> Any:
     """
     Return the value stored at the head of the linked list without removing it.
-    This operation corresponds to peek behavior in the queue abstraction.
+    This operation corresponds to peek behavior in the queues abstraction.
     :param dll: DLLQueue instance on which the operation is performed
     :return: Placeholder return value
     """
     if dll.is_empty():
-        raise ValueError("Peek Failed: the queue is empty")
+        raise ValueError("Peek Failed: the queues is empty")
     return dll.tail.data
 
 def is_empty(dll) -> bool:
     """
-    Check whether the queue is empty.
+    Check whether the queues is empty.
     :param dll: DLLQueue instance on which the operation is performed
     :return: Placeholder boolean value
     """
@@ -116,7 +116,7 @@ def is_empty(dll) -> bool:
 
 def size(dll) -> int:
     """
-    Return the number of elements currently present in the queue.
+    Return the number of elements currently present in the queues.
     :param dll: DLLQueue instance on which the operation is performed
     :return: Placeholder integer value
     """
@@ -124,7 +124,7 @@ def size(dll) -> int:
 
 def clear(dll) -> bool:
     """
-    Remove all elements from the queue and reset its state.
+    Remove all elements from the queues and reset its state.
     :param dll: DLLQueue instance on which the operation is performed
     :return: Placeholder boolean value
     """
@@ -133,7 +133,7 @@ def clear(dll) -> bool:
 
 def print_linked_list(dll):
     """
-    Print the contents of the queue from front to rear.
+    Print the contents of the queues from front to rear.
     This utility function is intended for debugging and demonstration.
     :param dll: DLLQueue instance on which the operation is performed
     :return: None

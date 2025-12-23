@@ -100,7 +100,7 @@ This mirrors how real-world libraries separate interface from implementation.
 ## Example Usage
 
 ```python
-from queue.deque_queue.schemas import DequeQueue
+from queues.deque_queue.schemas import DequeQueue
 
 queue = DequeQueue()
 queue.enqueue("A")

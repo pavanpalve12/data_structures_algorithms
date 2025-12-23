@@ -104,7 +104,7 @@ This mirrors how real-world libraries separate interface from implementation.
 ## Example Usage
 
 ```python
-from queue.list_queue.schemas import ListQueue
+from queues.list_queue.schemas import ListQueue
 
 queue = ListQueue()
 queue.enqueue("A")

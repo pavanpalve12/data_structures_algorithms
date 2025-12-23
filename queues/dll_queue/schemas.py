@@ -8,11 +8,11 @@ backed by a Doubly Linked List (DLL).
 
 It exposes lightweight container classes responsible for:
 - defining node structure
-- maintaining queue state via head reference
-- exposing a FIFO queue interface
+- maintaining queues state via head reference
+- exposing a FIFO queues interface
 - delegating all operational logic to the operations module
 
-All queue behavior and structural manipulation is implemented in the
+All queues behavior and structural manipulation is implemented in the
 `dll_queue_operations` module.
 
 ------------------------------------------------------------------------------------
@@ -24,31 +24,31 @@ Data Structures
 ------------------------------------------------------------------------------------
 Core Queue Operations
 ------------------------------------------------------------------------------------
-- enqueue -> Insert an element at the rear of the queue
-- dequeue -> Remove and return the front element of the queue
+- enqueue -> Insert an element at the rear of the queues
+- dequeue -> Remove and return the front element of the queues
 - peek -> Return the front element without removing it
-- is_empty -> Check whether the queue is empty
-- size -> Return the number of elements in the queue
-- clear -> Remove all elements from the queue
+- is_empty -> Check whether the queues is empty
+- size -> Return the number of elements in the queues
+- clear -> Remove all elements from the queues
 
 ------------------------------------------------------------------------------------
 Utility / Output Operations
 ------------------------------------------------------------------------------------
-- print_queue -> Print queue contents from front to rear
+- print_queue -> Print queues contents from front to rear
 
 ------------------------------------------------------------------------------------
 Design Notes
 ------------------------------------------------------------------------------------
-- This module contains no queue business logic
+- This module contains no queues business logic
 - All operations are delegated to the operations layer
 - Internal state is maintained via linked nodes
-- The queue follows strict FIFO (First-In-First-Out) semantics
+- The queues follows strict FIFO (First-In-First-Out) semantics
 - The schema layer acts only as an interface and state holder
 
 ------------------------------------------------------------------------------------
 """
 
-from queue.dll_queue.operations import dll_queue_operations
+from queues.dll_queue.operations import dll_queue_operations
 
 
 class Node:
@@ -76,20 +76,20 @@ class Node:
 
 class DLLQueue:
     """
-    DLLQueue represents a FIFO (First-In-First-Out) queue abstraction
+    DLLQueue represents a FIFO (First-In-First-Out) queues abstraction
     implemented using a doubly linked list.
 
     This class is responsible for:
     - maintaining the head reference of the linked list
-    - exposing the public queue interface
-    - delegating all queue operations to the operations module
+    - exposing the public queues interface
+    - delegating all queues operations to the operations module
 
-    No queue logic is implemented directly in this class.
+    No queues logic is implemented directly in this class.
     """
 
     def __init__(self):
         """
-        Initialize an empty doubly linked list based queue.
+        Initialize an empty doubly linked list based queues.
 
         :return: None
         """
@@ -100,9 +100,9 @@ class DLLQueue:
 # ------------ Queue Operations ---------------------------------------------------------------
     def enqueue(self, data):
         """
-        Insert an element at the rear of the queue.
+        Insert an element at the rear of the queues.
 
-        :param data: Element to be added to the queue
+        :param data: Element to be added to the queues
         :return: Result of the enqueue operation
         """
         new_node = Node(data)
@@ -110,47 +110,47 @@ class DLLQueue:
 
     def dequeue(self):
         """
-        Remove and return the front element of the queue.
+        Remove and return the front element of the queues.
 
-        :return: The element removed from the front of the queue
+        :return: The element removed from the front of the queues
         """
         return dll_queue_operations.delete_at_tail(self)
 
     def peek(self):
         """
-        Return the front element of the queue without removing it.
+        Return the front element of the queues without removing it.
 
-        :return: The front element of the queue
+        :return: The front element of the queues
         """
         return dll_queue_operations.get_value_at_tail(self)
 
     def is_empty(self):
         """
-        Check whether the queue is empty.
+        Check whether the queues is empty.
 
-        :return: True if the queue is empty, False otherwise
+        :return: True if the queues is empty, False otherwise
         """
         return dll_queue_operations.is_empty(self)
 
     def clear(self):
         """
-        Remove all elements from the queue.
+        Remove all elements from the queues.
 
-        :return: True if the queue is empty after clearing
+        :return: True if the queues is empty after clearing
         """
         return dll_queue_operations.clear(self)
 
     def get_size(self):
         """
-        Return the number of elements currently in the queue.
+        Return the number of elements currently in the queues.
 
-        :return: Integer representing the queue size
+        :return: Integer representing the queues size
         """
         return dll_queue_operations.size(self)
 
     def print_queue(self):
         """
-        Print the contents of the queue from front to rear.
+        Print the contents of the queues from front to rear.
 
         :return: None
         """

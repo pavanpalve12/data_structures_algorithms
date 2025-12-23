@@ -1,83 +1,130 @@
 # 🧠 Data Structures & Algorithms (DSA) – Python Implementation
 
 A clean, modular, and well-documented repository for mastering **Data Structures and Algorithms** in Python.  
-Each data structure is implemented from scratch with production-style code organization, clear docstrings, and testable examples.
+Each data structure is implemented from scratch with **production-style architecture**, clear docstrings, and executable examples.
+
+This repository emphasizes **correctness, invariants, and separation of concerns**, rather than relying on Python built-ins as black boxes.
+
 ---
 
 ## 🚀 Features
 
 ### 🔹 Common Data Structures
+
 - **Linked Lists**  
-  Linear data structure consisting of nodes connected via pointers.  
-  Efficient for insertions and deletions without reallocating memory.
+  Linear data structures composed of nodes connected via pointers.  
+  Implementations focus on pointer correctness, cycle safety, and size tracking.
 
 - **Stacks & Queues**  
-  Abstract data types following *LIFO* (Last-In-First-Out) and *FIFO* (First-In-First-Out) principles respectively.  
-  Useful in parsing, recursion tracking, and scheduling systems.
+  Abstract data types following *LIFO* and *FIFO* principles.  
+  Implemented using lists, deques, and linked lists to demonstrate trade-offs.
 
-- **Trees**  
-  Hierarchical data structure with parent-child relationships.  
-  Backbone of efficient searching and sorting (e.g., BST, AVL, heaps).
+- **Trees (Generic N-ary Tree)**  
+  Hierarchical data structure with explicit parent–child relationships.  
+  Implemented as a **linked, invariant-checked generic tree** supporting any number of children per node.
 
 - **Graphs**  
-  Collection of nodes (vertices) connected by edges.  
-  Ideal for modeling networks, shortest path algorithms, and dependency resolution.
+  Collection of vertices connected by edges.  
+  Suitable for modeling networks, dependencies, and traversal algorithms.
 
 - **Hash Tables**  
-  Data structure that maps keys to values using hash functions.  
-  Enables constant-time average access and is heavily used in caching and indexing.
+  Key–value mapping using hashing techniques.  
+  Implementations cover collision handling, resizing, and invariant enforcement.
 
 ---
 
 ### ⚙️ Core Algorithms
+
 - **Sorting Algorithms**  
-  Includes Merge Sort, Quick Sort, Bubble Sort, and Insertion Sort.  
-  Demonstrates time–space trade-offs and algorithmic efficiency.
+  Merge Sort, Quick Sort, Bubble Sort, Insertion Sort.  
+  Demonstrates time–space trade-offs and algorithmic complexity.
 
 - **Searching Algorithms**  
-  Covers Linear Search and Binary Search.  
-  Forms the foundation of optimized data retrieval in ordered structures.
+  Linear Search and Binary Search.  
+  Foundations for efficient data retrieval.
 
 - **Recursion & Backtracking**  
-  Fundamental approach to solving problems by breaking them down into subproblems.  
-  Applied in puzzles, pathfinding, and tree traversal.
+  Core problem-solving techniques used extensively in trees and graphs.
 
 - **Graph Algorithms**  
-  Classic implementations like BFS, DFS, Dijkstra’s, and Topological Sort.  
-  Useful for route planning, dependency management, and optimization problems.
+  BFS, DFS, Dijkstra’s Algorithm, Topological Sort.
 
 - **Dynamic Programming**  
-  Optimization technique to solve overlapping subproblems efficiently.  
-  Examples: Fibonacci sequence, knapsack problem, matrix path finding.
+  Optimization over recursive solutions (e.g., Fibonacci, knapsack, grid paths).
 
 ---
 
 ### 🧩 Additional Highlights
-- **Fully modular architecture** – Each operation isolated in its own file for readability.  
-- **Comprehensive docstrings** – Clear, consistent documentation across modules.  
-- **Multiple implementations per data structure** to understand trade-offs.  
-- **Strict separation of concerns** – schemas, operations, and execution layers.  
-- **Easy testing & demos** – Each structure includes example usage via `main.py`.
+
+- **Fully modular architecture** — schemas, operations, helpers, APIs  
+- **Invariant-driven design** — correctness enforced explicitly  
+- **Readable, testable code** — no hidden magic  
+- **Multiple implementations per structure** — understand trade-offs  
+- **Educational-first** — ideal for interviews and deep learning  
+
 ---
+
 ## 🧱 Current Implementations
 
 | Data Structure | Status | Highlights |
-|----------------|---------|------------|
-| **Singly Linked List** | ✅ Complete | Modular, cycle-safe, test-covered |
-| **Doubly Linked List** | ✅ Complete | Pointer-based, size-tracked |
-| **Stack (List-based)** | ✅ Complete | Simple implementation, learning-focused |
-| **Stack (Deque-based)** | ✅ Complete | Efficient push/pop, production-aligned |
+|----------------|--------|------------|
+| **Singly Linked List** | ✅ Complete | Modular, cycle-safe, invariant-checked |
+| **Doubly Linked List** | ✅ Complete | Explicit prev/next pointers |
+| **Stack (List-based)** | ✅ Complete | Simple, learning-focused |
+| **Stack (Deque-based)** | ✅ Complete | O(1) push/pop, production-aligned |
 | **Stack (DLL-based)** | ✅ Complete | Pointer-driven, invariant-checked |
 | **Queue (List-based)** | ✅ Complete | FIFO via list, dequeue-cost awareness |
-| **Queue (Deque-based)** | ✅ Complete | Optimal FIFO, production-ready |
+| **Queue (Deque-based)** | ✅ Complete | Optimal FIFO |
 | **Queue (DLL-based)** | ✅ Complete | Explicit head/tail control |
-| **Hash Table (List Buckets)** | ✅ Complete | Chaining via Python lists, resize-aware |
-| **Hash Table (Linked List Buckets)** | ✅ Complete | Node-based chaining, invariants enforced |
-| **Trees** | ⏳ Planned | Binary tree, BST, traversal ops |
+| **Hash Table (List Buckets)** | ✅ Complete | Chaining, resize-aware |
+| **Hash Table (Linked List Buckets)** | ✅ Complete | Node-based buckets |
+| **Generic Tree (N-ary)** | ✅ **Complete** | Parent pointers, DFS/BFS, invariants |
+| **Binary Tree / BST** | ⏳ Planned | Structural specialization |
 | **Graphs** | ⏳ Planned | Adjacency list & matrix |
+
+---
+
+## 🌳 Generic Tree (N-ary Tree)
+
+The repository includes a **Generic (N-ary) Tree** implementation designed to expose how trees work internally.
+
+### Key Characteristics
+- Linked, node-based structure
+- Explicit `parent` and `children` references
+- Supports **any number of children per node**
+- Strict invariant enforcement:
+  - single root
+  - exactly one parent per non-root node
+  - full connectivity
+  - no cycles
+  - `edges = nodes - 1`
+
+### Supported Operations
+- Insert and delete subtrees
+- Search by value (BFS)
+- DFS preorder and postorder traversals
+- BFS (level-order) traversal
+- Height (levels / edges)
+- Depth of a node
+- Size (node count)
+- Human-readable BFS printing
+
+### Structure
+```
+generic_tree/
+├── schemas.py      # Node & Tree (state only)
+├── operations.py   # Insert, delete, search, DFS/BFS
+├── helpers.py      # Invariants, height, depth, size, printing
+├── tree_api.py     # Public facade
+└── main.py         # Examples & demos
+```
+
+This implementation is intentionally verbose and explicit to aid learning and correctness.
+
 ---
 
 ## 🧩 Getting Started
+
 ```bash
 # Clone the repo
 git clone https://github.com/pavanpalve12/data_structures_algorithms
@@ -85,7 +132,24 @@ cd dsa
 
 # (Optional) create a virtual environment
 python -m venv venv
-source venv/bin/activate   # On Windows: venv\Scripts\activate
+source venv/bin/activate   # Windows: venv\Scripts\activate
+```
 
-# Install dependencies (if any)
-pip install -r requirements.txt
+---
+
+## 🎯 Who This Repo Is For
+
+- Learners who want to **understand data structures, not memorize them**
+- Engineers preparing for **DSA interviews**
+- Developers interested in **clean architecture & invariants**
+- Anyone who wants to see how structures work *under the hood*
+
+---
+
+## 📌 Notes
+
+- This repo favors **clarity over cleverness**
+- Python built-ins are avoided where they hide structure
+- Code is written to be read, reasoned about, and extended
+
+---
