@@ -11,7 +11,7 @@ This module contains no tree mutation logic.
 """
 
 from functools import wraps
-from typing import List, Any
+from typing import List, Any, Optional
 from schemas import Tree, Node
 import operations
 

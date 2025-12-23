@@ -188,7 +188,7 @@ print(tree.compute_size())
 
 ## Example Output
 
-```
+```text
 ====================== Tree ======================
 Level 0: A → B, C, D
 Level 1: B → E, F
@@ -204,6 +204,10 @@ Level 3: H → **
 Level 3: I → **
 Level 3: M → **
 Level 3: N → **
+--------------------------------------------------
+Note:
+ - Parent → Children
+ - leaf node → **
 --------------------------------------------------
 Root Node       → A
 Size            → 14
