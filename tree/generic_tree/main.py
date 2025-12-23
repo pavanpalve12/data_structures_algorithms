@@ -16,10 +16,6 @@ Design Principles
 
 ------------------------------------------------------------------------------------
 """
-from ast import literal_eval
-
-from decorator import append
-from sqlalchemy import True_
 
 from tree_api import TreeAPI
 from schemas import Node
