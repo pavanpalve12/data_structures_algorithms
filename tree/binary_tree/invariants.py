@@ -49,6 +49,9 @@ Design Notes
 - No I/O or logging is performed
 ------------------------------------------------------------------------------------
 """
+from typing import List, Dict
+
+from tree.binary_tree.schemas import Node
 
 
 # ================================================================================
@@ -111,28 +114,31 @@ def validate_edge_count(tree) -> bool:
 # ================================================================================
 # Internal Helpers (Invariant Support)
 # ================================================================================
-def _build_parent_map(tree):
+def _build_parent_map(level_nodes: List[Node], parent_map: Dict) -> Dict:
     """
-    Purpose: Build a mapping of child nodes to their parent nodes
-    :param tree: Tree instance
-    :return: Parent map
+    Purpose: Build a mapping of child node to parent node using BFS traversal
+    :param level_nodes: List of nodes at the current BFS level
+    :param parent_map: Dictionary mapping node -> parent (root maps to None)
+    :return: Updated parent_map dictionary
     """
-    pass
+    if not level_nodes:
+        return parent_map
 
+    next_level = []
+    for node in level_nodes:
+        children = []
 
-def _count_nodes(tree) -> int:
-    """
-    Purpose: Count total number of nodes in the tree
-    :param tree: Tree instance
-    :return: Total node count
-    """
-    pass
+        if node.data not in parent_map:
+            parent_map[node.data] = None
 
+        if node.left:
+            children.append(node.left)
+            parent_map[node.left.data] = node.data
 
-def _count_edges(tree) -> int:
-    """
-    Purpose: Count total number of edges in the tree
-    :param tree: Tree instance
-    :return: Total edge count
-    """
-    pass
+        if node.right:
+            children.append(node.right)
+            parent_map[node.right.data] = node.data
+
+        next_level.extend(children)
+
+    return _build_parent_map(next_level, parent_map)

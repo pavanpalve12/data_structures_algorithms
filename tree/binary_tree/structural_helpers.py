@@ -49,8 +49,8 @@ Design Notes
 - This module contains reusable building blocks only
 ------------------------------------------------------------------------------------
 """
-from typing import List, Any
 
+from typing import List, Any
 from schemas import Node, Tree
 
 # ================================================================================
@@ -65,13 +65,28 @@ def is_tree_empty(tree: Tree) -> bool:
     return tree.root is None
 
 
-def next_empty_slot(tree):
+def get_next_empty_slot(level_nodes):
     """
-    Purpose: Identify the next available insertion slot using level-order traversal
-    :param tree: Tree instance
-    :return: Reference to node and position for insertion
+    Purpose: Identify the first node in BFS order that has a missing child
+    :param level_nodes: List of nodes at the current BFS level
+    :return: Node with an empty left or right child, or None if not found
     """
-    pass
+    if not level_nodes:
+        return None
+
+    next_level = []
+    for node in level_nodes:
+        if node.left is None or node.right is None:
+            return node
+
+        children = []
+        if node.left:
+            children.append(node.left)
+        if node.right:
+            children.append(node.right)
+        next_level.extend(children)
+
+    return get_next_empty_slot(next_level)
 
 
 def get_deepest_rightmost_node(tree) -> Node:
@@ -80,8 +95,111 @@ def get_deepest_rightmost_node(tree) -> Node:
     :param tree: Tree instance
     :return: Deepest rightmost node reference
     """
+    if is_tree_empty(tree):
+        raise LookupError("Get Rightmost Failed: the tree is empty")
     nodes = _bfs_traverse([tree.root])
     return nodes[-1]
+
+
+def is_left_child(child: Node, parent: Node) -> bool:
+    """
+    Purpose: Check whether a node is the left child of a given parent
+    :param child: Child node
+    :param parent: Parent node
+    :return: True if child is left child, otherwise False
+    """
+    return parent.left == child
+
+
+def is_right_child(child: Node, parent: Node) -> bool:
+    """
+    Purpose: Check whether a node is the right child of a given parent
+    :param child: Child node
+    :param parent: Parent node
+    :return: True if child is right child, otherwise False
+    """
+    return parent.right == child
+
+
+def search_with_parent(tree: Tree, target_value) -> Node:
+    """
+    Purpose: Search for a node by value while tracking its parent using BFS
+    :param tree: Tree instance
+    :param target_value: Value to search for
+    :return: parent if success else error
+    """
+    if is_tree_empty(tree):
+        raise LookupError("Search Failed: the tree is empty")
+
+    parent_list = _get_parent([tree.root], target_value)
+    if not parent_list:
+        raise LookupError("Search Failed: parent not found.")
+
+    parent = parent_list.pop()
+    return parent
+
+
+def delete_leaf_node(tree, node, parent) -> bool:
+    """
+    Purpose: Delete a leaf node from the binary tree
+    :param tree: Tree instance
+    :param node: Leaf node to be deleted
+    :param parent: Parent of the node
+    :return: True if deletion succeeds, otherwise False
+    """
+    if parent is None:
+        tree.root = None
+        return True
+
+    if is_left_child(node, parent):
+        parent.left = None
+        return True
+    if is_right_child(node, parent):
+        parent.right = None
+        return True
+
+    return False
+
+
+def delete_partial_parent(tree, node, parent):
+    """
+    Purpose: Delete a node that has exactly one child and promote the child
+    :param tree: Tree instance
+    :param node: Node to be deleted
+    :param parent: Parent of the node
+    :return: True if deletion succeeds, otherwise False
+    """
+    child = node.left if node.left else node.right
+
+    if parent is None:
+        tree.root = child
+        return True
+
+    if is_left_child(node, parent):
+        parent.left = child
+        return True
+
+    if is_right_child(node, parent):
+        parent.right = child
+        return True
+    return False
+
+
+def delete_full_parent(tree, node):
+    """
+    Purpose: Delete a node with two children using deepest-rightmost replacement
+    :param tree: Tree instance
+    :param node: Node to be deleted
+    :return: True if deletion succeeds
+    """
+    replace_node = get_deepest_rightmost_node(tree)
+    if not replace_node:
+        raise LookupError("Delete Failed: deepest rightmost node is not found.")
+
+    replace_parent = search_with_parent(tree, replace_node.data)
+
+    node.data = replace_node.data
+    return delete_leaf_node(tree, replace_node, replace_parent)
 
 # ================================================================================
 # Tree Property Computation Helpers
@@ -111,6 +229,7 @@ def compute_height(tree: Tree, edges: bool = False) -> int:
     height = _bfs_height([tree.root])
     return height - 1 if edges else height
 
+
 def compute_depth(tree, target_value) -> int:
     """
     Purpose: Compute the depth of a given node from the root
@@ -124,6 +243,7 @@ def compute_depth(tree, target_value) -> int:
     # subtract 1 since depth at root is 0
     return _bfs_depth([tree.root], target_value) - 1
 
+
 def compute_edges(tree: Tree) -> int:
     """
     Purpose: Compute the total number of nodes in the tree
@@ -134,6 +254,7 @@ def compute_edges(tree: Tree) -> int:
         return 0
 
     return _bfs_edges([tree.root])
+
 
 def compute_bfs_metadata(tree: Tree) -> dict:
     """
@@ -187,6 +308,7 @@ def _bfs_search(level_nodes: List[Node], target_value) -> Node:
 
     return _bfs_search(next_level, target_value)
 
+
 def _bfs_size(level_nodes: List[Node]) -> int:
     """
     Purpose: Assist level-order BFS traversal
@@ -210,6 +332,7 @@ def _bfs_size(level_nodes: List[Node]) -> int:
 
     return total_nodes + _bfs_size(next_level)
 
+
 def _bfs_height(level_nodes: List[Node]) -> int:
     """
     Purpose: Assist level-order BFS traversal
@@ -231,6 +354,7 @@ def _bfs_height(level_nodes: List[Node]) -> int:
         next_level.extend(children)
 
     return level + _bfs_height(next_level)
+
 
 def _bfs_depth(level_nodes: List[Node], target_value) -> int:
     """
@@ -308,6 +432,7 @@ def _bfs_traverse(level_nodes: List[Node]) -> List[Any]:
 
     return result + _bfs_traverse(next_level)
 
+
 def _bfs_metadata(level_nodes, level_index, metadata):
     """
     Purpose: Collect BFS-based metadata for the binary tree
@@ -350,3 +475,33 @@ def _bfs_metadata(level_nodes, level_index, metadata):
     # recurse to next BFS level
     return compute_bfs_metadata(next_level, level_index + 1, metadata)
 
+
+def _get_parent(level_nodes: List[Node], target_value) -> List[Node]:
+    """
+    Purpose: Perform level-order BFS traversal
+    :param level_nodes: nodes at same level (root at beginning)
+    :param target_value: target value to be searched
+    :return: Traversal result
+    """
+    if not level_nodes:
+        return []
+
+    parent = []
+    next_level = []
+    for node in level_nodes:
+        children = []
+
+        if node.data == target_value:
+            return parent
+
+        if node.left is not None or node.left is not None:
+            parent.append(node)
+
+        if node.left:
+            children.append(node.left)
+        if node.right:
+            children.append(node.right)
+
+        next_level.extend(children)
+
+    return parent + _get_parent(next_level, target_value)
