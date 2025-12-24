@@ -59,7 +59,24 @@ def main() -> None:
     Purpose: Application entry function
     :return: None
     """
-    tree = _generate_test_tree()
+    #tree = _generate_test_tree()
+    #tree.print_tree()
+    tree = TreeAPI("A")
+
+    tree.insert_node("B")
+    tree.insert_node("C")
+    tree.insert_node("D")
+    tree.insert_node("E")
+    tree.insert_node("F")
+    tree.insert_node("G")
+    tree.insert_node("H")
+
+    tree.print_tree()
+
+    tree.delete_node("G")
+    tree.print_tree()
+
+    tree.delete_node("B")
     tree.print_tree()
 
     print(" Operations ".center(60, '-'))

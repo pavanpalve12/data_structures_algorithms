@@ -92,22 +92,25 @@ The design mirrors how binary trees are implemented in real systems
 ------------------------------------------------------------------------------------
 ## Sample Output
 ```text
-====================== Tree ======================
+================== Binary Tree ===================
 	Level 0: A → B, C
 	Level 1: B → D, E
-	Level 1: C → F, **
-	Level 2: D → **
+	Level 1: C → F, G
+	Level 2: D → H
 	Level 2: E → **
 	Level 2: F → **
+	Level 2: G → **
+	Level 3: H → **
 --------------------------------------------------
-	Note:
-	 - Parent → Children
-	 - leaf node → **
+	Legend: 
+	 - Parent → Children Relationship
+	 - **     → Leaf node
 --------------------------------------------------
 	Root Node       → A
-	Size            → 6
-	Height (Levels) → 3
-	Height (Edges)  → 2
+	Size            → 8
+	Height (Levels) → 4
+	Height (Edges)  → 3
+	Edges           → 7
 ==================================================
 ```
 

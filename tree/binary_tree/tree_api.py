@@ -75,7 +75,7 @@ class TreeAPI:
         :param value: Value to be inserted
         :return: None
         """
-        return operations.insert_node(self, value)
+        return operations.insert_node(self.tree, value)
 
     def delete_node(self, value) -> None:
         """
@@ -83,7 +83,7 @@ class TreeAPI:
         :param value: Value to be deleted
         :return: None
         """
-        return operations.delete_node(self, value)
+        return operations.delete_node(self.tree, value)
 
     def search_node(self, value) -> Node:
         """

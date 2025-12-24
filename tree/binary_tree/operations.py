@@ -50,7 +50,7 @@ Design Notes
 """
 from typing import List, Any
 
-import visual_helpers, structural_helpers
+import visual_helpers, structural_helpers, invariants
 from tree.binary_tree.schemas import Tree, Node
 
 
@@ -78,7 +78,8 @@ def insert_node(tree: Tree, value) -> bool:
         parent.right = new_node
         return True
 
-    return False
+    invariants.validate_tree(tree)
+    return True
 
 
 def delete_node(tree: Tree, value) -> bool:
@@ -98,11 +99,17 @@ def delete_node(tree: Tree, value) -> bool:
         raise LookupError("Delete Failed: parent node not found.")
 
     if node.left is None and node.right is None:
-        return structural_helpers.delete_leaf_node(tree, node, parent)
+        structural_helpers.delete_leaf_node(tree, node, parent)
+        invariants.validate_tree(tree)
+        return True
     if node.left is None or node.right is None:
-        return structural_helpers.delete_partial_parent(tree, node, parent)
+        structural_helpers.delete_partial_parent(tree, node, parent)
+        invariants.validate_tree(tree)
+        return True
 
-    return structural_helpers.delete_full_parent(tree, node)
+    structural_helpers.delete_full_parent(tree, node)
+    invariants.validate_tree(tree)
+    return True
 
 
 def search_node(tree: Tree, target_value) -> Node:

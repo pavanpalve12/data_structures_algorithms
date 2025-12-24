@@ -131,11 +131,10 @@ def search_with_parent(tree: Tree, target_value) -> Node:
     if is_tree_empty(tree):
         raise LookupError("Search Failed: the tree is empty")
 
-    parent_list = _get_parent([tree.root], target_value)
-    if not parent_list:
+    parent = _get_parent([tree.root], target_value)
+    if not parent:
         raise LookupError("Search Failed: parent not found.")
 
-    parent = parent_list.pop()
     return parent
 
 
@@ -476,7 +475,7 @@ def _bfs_metadata(level_nodes, level_index, metadata):
     return compute_bfs_metadata(next_level, level_index + 1, metadata)
 
 
-def _get_parent(level_nodes: List[Node], target_value) -> List[Node]:
+def _get_parent(level_nodes: List[Node], target_value) -> Node:
     """
     Purpose: Perform level-order BFS traversal
     :param level_nodes: nodes at same level (root at beginning)
@@ -484,9 +483,8 @@ def _get_parent(level_nodes: List[Node], target_value) -> List[Node]:
     :return: Traversal result
     """
     if not level_nodes:
-        return []
+        return None
 
-    parent = []
     next_level = []
     for node in level_nodes:
         children = []
@@ -494,8 +492,10 @@ def _get_parent(level_nodes: List[Node], target_value) -> List[Node]:
         if node.data == target_value:
             return parent
 
-        if node.left is not None or node.left is not None:
-            parent.append(node)
+        if node.left and node.left.data == target_value:
+            return node
+        if node.right and node.right.data == target_value:
+            return node
 
         if node.left:
             children.append(node.left)
@@ -504,4 +504,4 @@ def _get_parent(level_nodes: List[Node], target_value) -> List[Node]:
 
         next_level.extend(children)
 
-    return parent + _get_parent(next_level, target_value)
+    return _get_parent(next_level, target_value)
