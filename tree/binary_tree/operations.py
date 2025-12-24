@@ -50,44 +50,79 @@ Design Notes
 """
 from typing import List, Any
 
-import visual_helpers, structural_helpers
+import visual_helpers, structural_helpers, invariants
 from tree.binary_tree.schemas import Tree, Node
 
 
 # ================================================================================
 # Core Operations
 # ================================================================================
-def insert_node(tree_api, value) -> None:
+def insert_node(tree: Tree, value) -> bool:
     """
     Purpose: Insert a value into the binary tree
-    :param tree_api: TreeAPI instance
+    :param tree: Tree instance
     :param value: Value to be inserted
-    :return: None
+    :return: True if success else False
     """
-    pass
+    new_node = Node(value)
+
+    parent = structural_helpers.get_next_empty_slot([tree.root])
+    if parent is None:
+        return False
+
+    if parent.left is None:
+        parent.left = new_node
+        return True
+
+    if parent.right is None:
+        parent.right = new_node
+        return True
+
+    invariants.validate_tree(tree)
+    return True
 
 
-def delete_node(tree_api, value) -> None:
+def delete_node(tree: Tree, value) -> bool:
     """
     Purpose: Delete a value from the binary tree
-    :param tree_api: TreeAPI instance
+    :param tree: Tree instance
     :param value: Value to be deleted
-    :return: None
+    :return: True if success else False
     """
-    pass
+    if structural_helpers.is_tree_empty(tree):
+        raise LookupError("Delete Failed: the tree is empty.")
+
+    node = search_node(tree, value)
+    parent = structural_helpers.search_with_parent(tree, value)
+
+    if parent is None:
+        raise LookupError("Delete Failed: parent node not found.")
+
+    if node.left is None and node.right is None:
+        structural_helpers.delete_leaf_node(tree, node, parent)
+        invariants.validate_tree(tree)
+        return True
+    if node.left is None or node.right is None:
+        structural_helpers.delete_partial_parent(tree, node, parent)
+        invariants.validate_tree(tree)
+        return True
+
+    structural_helpers.delete_full_parent(tree, node)
+    invariants.validate_tree(tree)
+    return True
 
 
 def search_node(tree: Tree, target_value) -> Node:
     """
     Purpose: Search for a value in the binary tree
-    :param tree: TreeAPI instance
+    :param tree: Tree instance
     :param target_value: Value to search for
     :return: Node if value exists, otherwise Error
     """
     if structural_helpers.is_tree_empty(tree):
         raise LookupError("Search Failed: the tree is empty.")
 
-    target_node = structural_helpers.bfs_search([tree.root], target_value)
+    target_node = structural_helpers._bfs_search([tree.root], target_value)
 
     if target_node is None:
         raise LookupError("Search Failed: the node is not found.")
@@ -115,6 +150,7 @@ def dfs_preorder(node: Node) -> List[Any]:
 
     return result
 
+
 def dfs_inorder(node: Node) -> List[Any]:
     """
     Purpose: Perform inorder DFS traversal
@@ -135,6 +171,7 @@ def dfs_inorder(node: Node) -> List[Any]:
         result.extend(dfs_inorder(node.right))
 
     return result
+
 
 def dfs_postorder(node: Node) -> List[Any]:
     """
