@@ -9,7 +9,7 @@ This module defines the **data structures only** for representing a tree.
 It intentionally contains **no business logic, traversal logic, or validation**.
 
 All operations on the tree are implemented in higher-level modules
-(`tree_operations`, `tree_helpers`, `tree_api`).
+(`tree_operations`, `tree_helpers`, `bst_api`).
 
 Design goals:
 - Represent structure, not behavior

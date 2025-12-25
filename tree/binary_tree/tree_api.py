@@ -1,6 +1,6 @@
 """
 ------------------------------------------------------------------------------------
-Module Name: tree_api
+Module Name: bst_api
 ------------------------------------------------------------------------------------
 This module defines the **user-facing API layer** for a Normal Binary Tree.
 

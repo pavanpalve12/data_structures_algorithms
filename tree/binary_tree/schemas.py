@@ -16,7 +16,7 @@ All behavioral logic is delegated to higher-level modules such as:
 - operations
 - helpers
 - invariant
-- tree_api
+- bst_api
 
 ------------------------------------------------------------------------------------
 Classes Defined
