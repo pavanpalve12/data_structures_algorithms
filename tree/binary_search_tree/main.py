@@ -52,7 +52,15 @@ def main():
     tree = BSTApi(15)
     generate_test_tree(tree)
 
+    tree.insert_node(100)
+
     tree.print_tree()
+
+    tree.delete_node(100)
+    tree.delete_node(15)
+    tree.print_tree()
+
+
 
     print(" Operations ".center(60, '-'))
     print("-" * 60)

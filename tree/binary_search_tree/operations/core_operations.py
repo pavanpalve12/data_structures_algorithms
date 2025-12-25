@@ -1,9 +1,9 @@
 from typing import Optional
 
 from tree.binary_search_tree.helpers import (
-    structural_helpers as str_help,
-    invariant_helpers as inv_help
+    structural_helpers as str_help
 )
+from tree.binary_search_tree.operations import invariants_operations as inv_help
 from tree.binary_search_tree.schemas.schemas import Tree, Node
 
 
@@ -51,7 +51,7 @@ def delete_node(tree: Tree, value) -> bool:
 
 
 def search_node(tree: Tree, target_value) -> Optional[Node]:
-    if str_help.is_empty_tree(tree):
+    if str_help._is_empty_tree(tree):
         return None
     return _search(tree.root, target_value)
 
