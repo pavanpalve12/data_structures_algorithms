@@ -1,3 +1,46 @@
+"""
+------------------------------------------------------------------------------------
+Module Name: state_operations
+------------------------------------------------------------------------------------
+This module implements **tree state and metadata computation logic** for a
+Binary Search Tree (BST).
+
+It is responsible for deriving detailed structural and traversal-related
+information from the tree without mutating it.
+
+This module focuses exclusively on **read-only analysis** of the tree and
+provides a consolidated metadata view that is later consumed by invariant
+validation and visualization logic.
+------------------------------------------------------------------------------------
+Responsibilities
+------------------------------------------------------------------------------------
+- Compute global tree metadata (size, height, edges)
+- Build parent and child relationship maps
+- Compute depth information for each node
+- Derive traversal orders (BFS, preorder, inorder, postorder)
+- Identify minimum and maximum nodes
+------------------------------------------------------------------------------------
+Public Functions
+------------------------------------------------------------------------------------
+- _compute_metadata
+------------------------------------------------------------------------------------
+Internal / Helper Functions
+------------------------------------------------------------------------------------
+- _bfs_metadata
+- _preorder
+- _inorder
+- _postorder
+------------------------------------------------------------------------------------
+Design Notes
+------------------------------------------------------------------------------------
+- All operations are read-only
+- No tree mutation is performed
+- Traversals operate on Node objects (not values)
+- Metadata is computed dynamically on demand
+- This module does not enforce invariants directly
+------------------------------------------------------------------------------------
+"""
+
 from typing import Dict, List
 
 from tree.binary_search_tree.schemas.schemas import Node, Tree
@@ -5,10 +48,20 @@ from tree.binary_search_tree.helpers import (
     structural_helpers as str_help
 )
 
+
 # --------------------------------------------------------------------------
 # Compute Metadata -> detailed info on tree
 # --------------------------------------------------------------------------
 def _compute_metadata(tree: Tree) -> Dict:
+    """
+    Compute detailed metadata for the given Binary Search Tree.
+
+    The metadata includes structural properties, traversal orders, parent-child
+    relationships, depth information, and extremal nodes.
+
+    :param tree: Tree instance for which metadata is to be computed.
+    :return: Dictionary containing computed metadata.
+    """
     metadata = {
         'nodes': [],
         'bfs': [],
@@ -16,8 +69,8 @@ def _compute_metadata(tree: Tree) -> Dict:
         'inorder': [],
         'postorder': [],
         'parent_map': {},  # child node -> parent or None
-        'child_map': {},  # parent node -> [left?, right?]
-        'depth_map': {},  # node -> depth (edges)
+        'child_map': {},   # parent node -> [left?, right?]
+        'depth_map': {},   # node -> depth (edges)
         'size': 0,
         'edge_count': 0,
         'height_levels': 0,
@@ -32,7 +85,7 @@ def _compute_metadata(tree: Tree) -> Dict:
     _bfs_metadata([tree.root], 0, metadata)
 
     metadata["height_edges"] = metadata["height_levels"] - 1
-    metadata["inorder"] =  _inorder(tree.root)
+    metadata["inorder"] = _inorder(tree.root)
     metadata["preorder"] = _preorder(tree.root)
     metadata["postorder"] = _postorder(tree.root)
 
@@ -47,7 +100,17 @@ def _bfs_metadata(
         level_index: int,
         metadata: Dict
 ):
+    """
+    Perform a level-order traversal to populate structural metadata.
 
+    This helper builds parent/child maps, depth information, size, edge count,
+    and tracks minimum and maximum node values.
+
+    :param level_nodes: List of nodes at the current level.
+    :param level_index: Current level index (depth).
+    :param metadata: Metadata dictionary being populated.
+    :return: None
+    """
     if not level_nodes:
         return
 
@@ -92,6 +155,14 @@ def _bfs_metadata(
 # --------------------------------------------------------------------------
 
 def _preorder(node: Node) -> List[Node]:
+    """
+    Perform a preorder depth-first traversal.
+
+    Traversal order: root → left → right
+
+    :param node: Root node of the current subtree.
+    :return: List of nodes in preorder sequence.
+    """
     if node is None:
         return []
 
@@ -103,7 +174,16 @@ def _preorder(node: Node) -> List[Node]:
 
     return result
 
+
 def _postorder(node: Node) -> List[Node]:
+    """
+    Perform a postorder depth-first traversal.
+
+    Traversal order: left → right → root
+
+    :param node: Root node of the current subtree.
+    :return: List of nodes in postorder sequence.
+    """
     if node is None:
         return []
 
@@ -115,7 +195,16 @@ def _postorder(node: Node) -> List[Node]:
     result.append(node)
     return result
 
+
 def _inorder(node: Node) -> List[Node]:
+    """
+    Perform an inorder depth-first traversal.
+
+    Traversal order: left → root → right
+
+    :param node: Root node of the current subtree.
+    :return: List of nodes in inorder sequence.
+    """
     if node is None:
         return []
 

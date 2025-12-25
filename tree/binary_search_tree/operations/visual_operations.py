@@ -1,3 +1,43 @@
+"""
+------------------------------------------------------------------------------------
+Module Name: visual_operations
+------------------------------------------------------------------------------------
+This module implements **visualization and pretty-printing utilities** for a
+Binary Search Tree (BST).
+
+It provides decorators and helper functions to render the tree structure,
+relationships, and metadata in a human-readable format for debugging,
+learning, and inspection purposes.
+
+This module is responsible only for **presentation** and does not mutate
+the tree or enforce invariants.
+------------------------------------------------------------------------------------
+Responsibilities
+------------------------------------------------------------------------------------
+- Pretty-print tree structure level by level
+- Display parent–child relationships
+- Display computed tree metadata
+- Provide legend and formatting utilities
+------------------------------------------------------------------------------------
+Public Functions
+------------------------------------------------------------------------------------
+- print_tree
+------------------------------------------------------------------------------------
+Internal / Helper Functions
+------------------------------------------------------------------------------------
+- pretty_print
+- _get_metadata_strings
+- _get_legend_strings
+------------------------------------------------------------------------------------
+Design Notes
+------------------------------------------------------------------------------------
+- Visualization relies on precomputed metadata
+- Output is printed to stdout
+- No mutation or validation logic is implemented here
+- Intended for debugging and educational use
+------------------------------------------------------------------------------------
+"""
+
 from functools import wraps
 from typing import Tuple, List, Dict
 
@@ -7,10 +47,23 @@ from tree.binary_search_tree.helpers import (
     state_helpers as stt_help
 )
 
+
 # ================================================================================
 # Tree Visualization Decorators
 # ================================================================================
 def pretty_print(func):
+    """
+    Decorator to format and pretty-print tree metadata.
+
+    This decorator wraps a function that returns tree metadata and renders
+    a structured, human-readable representation of the tree, including:
+    - parent–child relationships
+    - depth information
+    - tree statistics and legend
+
+    :param func: Function that returns tree metadata.
+    :return: Wrapped function that prints formatted output.
+    """
     @wraps(func)
     def wrapper(*args, **kwargs):
         metadata = func(*args, **kwargs)
@@ -61,29 +114,50 @@ def pretty_print(func):
 # ================================================================================
 @pretty_print
 def print_tree(tree: Tree) -> Dict:
+    """
+    Print a visual representation of the Binary Search Tree.
+
+    This function computes tree metadata and delegates rendering to the
+    pretty_print decorator.
+
+    :param tree: Tree instance to be printed.
+    :return: Metadata dictionary used for visualization.
+    """
     if str_help._is_empty_tree(tree):
         print('BST is empty.')
         return None
 
     metadata = stt_help._compute_metadata(tree)
-
     return metadata
+
 
 # ================================================================================
 # Internal Visualization Helpers
 # ================================================================================
 def _get_metadata_strings(metadata: Dict) -> List[Tuple[str, str]]:
+    """
+    Build formatted metadata strings for display.
+
+    :param metadata: Metadata dictionary computed from the tree.
+    :return: List of (label, value) tuples for tree metadata.
+    """
     return [
         ("Root Node", metadata["bfs"][0].data),
-        ("Size", f"{metadata["size"]}"),
-        ("Height (Levels)", f"{metadata["height_levels"]}"),
-        ("Height (Edges)", f"{metadata["height_edges"]}"),
-        ("Edges", f"{metadata["edge_count"]}"),
-        ("Min Node", f"{metadata["min_node"].data}"),
-        ("Max Node", f"{metadata["max_node"].data}")
+        ("Size", f"{metadata['size']}"),
+        ("Height (Levels)", f"{metadata['height_levels']}"),
+        ("Height (Edges)", f"{metadata['height_edges']}"),
+        ("Edges", f"{metadata['edge_count']}"),
+        ("Min Node", f"{metadata['min_node'].data}"),
+        ("Max Node", f"{metadata['max_node'].data}")
     ]
 
+
 def _get_legend_strings():
+    """
+    Build legend strings explaining the tree visualization.
+
+    :return: List of (symbol, description) tuples.
+    """
     return [
         ("Parent", "Children Relationship"),
         ("**", "Leaf node")
