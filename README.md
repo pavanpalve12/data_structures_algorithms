@@ -79,7 +79,7 @@ This repository emphasizes **correctness, invariants, and separation of concerns
 | **Hash Table (List Buckets)** | ✅ Complete | Chaining, resize-aware |
 | **Hash Table (Linked List Buckets)** | ✅ Complete | Node-based buckets |
 | **Generic Tree (N-ary)** | ✅ **Complete** | Parent pointers, DFS/BFS, invariants |
-| **Binary Tree / BST** | ⏳ Planned | Structural specialization |
+| **Binary Tree / BST** | ✅ **Complete** | Parent pointers, DFS/BFS, invariants  |
 | **Graphs** | ⏳ Planned | Adjacency list & matrix |
 
 ---
