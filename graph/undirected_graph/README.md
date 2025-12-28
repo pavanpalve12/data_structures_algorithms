@@ -84,20 +84,37 @@ The design mirrors how graphs are implemented in real systems such as:
 ## Example Graph
 
 ```text
-A — B — C     D — E
+        A — B — C
+        |   |
+        E — D
+
+        F — G
 ```
 
 Adjacency List:
 
 ```text
-A → [B]
-B → [A, C]
-C → [B]
-D → [E]
-E → [D]
+================ Undirected Graph ================
+	Graph [A] → [B, E]
+	Graph [B] → [A, C, D]
+	Graph [C] → [B]
+	Graph [D] → [B, E]
+	Graph [E] → [D, A]
+	Graph [F] → [G]
+	Graph [G] → [F]
+==================================================
+------------------------ Traversals ------------------------
+BFS (Iterative) from A : ['A', 'B', 'E', 'C', 'D']
+BFS (Recursive) from A : ['A', 'B', 'E', 'C', 'D']
+DFS (Iterative) from A : ['A', 'E', 'D', 'B', 'C']
+DFS (Recursive) from A : ['A', 'B', 'C', 'D', 'E']
+------------------------------------------------------------
+--------------------- Graph Properties ---------------------
+Connected Components        : 2
+Cycle Detected (Iterative)  : True
+Cycle Detected (Recursive)  : True
+------------------------------------------------------------
 ```
-
-Connected Components: **2**
 
 ------------------------------------------------------------------------------------
 
