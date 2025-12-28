@@ -63,63 +63,26 @@ This repository emphasizes **correctness, invariants, and separation of concerns
 - **Educational-first** — ideal for interviews and deep learning  
 
 ---
+## 🧱 Current Implementations — Unified Summary
 
-## 🧱 Current Implementations
-
-| Data Structure | Status | Highlights |
-|----------------|--------|------------|
-| **Singly Linked List** | ✅ Complete | Modular, cycle-safe, invariant-checked |
-| **Doubly Linked List** | ✅ Complete | Explicit prev/next pointers |
-| **Stack (List-based)** | ✅ Complete | Simple, learning-focused |
-| **Stack (Deque-based)** | ✅ Complete | O(1) push/pop, production-aligned |
-| **Stack (DLL-based)** | ✅ Complete | Pointer-driven, invariant-checked |
-| **Queue (List-based)** | ✅ Complete | FIFO via list, dequeue-cost awareness |
-| **Queue (Deque-based)** | ✅ Complete | Optimal FIFO |
-| **Queue (DLL-based)** | ✅ Complete | Explicit head/tail control |
-| **Hash Table (List Buckets)** | ✅ Complete | Chaining, resize-aware |
-| **Hash Table (Linked List Buckets)** | ✅ Complete | Node-based buckets |
-| **Generic Tree (N-ary)** | ✅ **Complete** | Parent pointers, DFS/BFS, invariants |
-| **Binary Tree / BST** | ✅ **Complete** | Parent pointers, DFS/BFS, invariants  |
-| **Graphs** | ⏳ Planned | Adjacency list & matrix |
-
----
-
-## 🌳 Generic Tree (N-ary Tree)
-
-The repository includes a **Generic (N-ary) Tree** implementation designed to expose how trees work internally.
-
-### Key Characteristics
-- Linked, node-based structure
-- Explicit `parent` and `children` references
-- Supports **any number of children per node**
-- Strict invariant enforcement:
-  - single root
-  - exactly one parent per non-root node
-  - full connectivity
-  - no cycles
-  - `edges = nodes - 1`
-
-### Supported Operations
-- Insert and delete subtrees
-- Search by value (BFS)
-- DFS preorder and postorder traversals
-- BFS (level-order) traversal
-- Height (levels / edges)
-- Depth of a node
-- Size (node count)
-- Human-readable BFS printing
-
-### Structure
-```
-generic_tree/
-├── schemas.py      # Node & Tree (state only)
-├── operations.py   # Insert, delete, search, DFS/BFS
-├── helpers.py      # Invariants, height, depth, size, printing
-├── tree_api.py     # Public facade
-└── main.py         # Examples & demos
-```
-
-This implementation is intentionally verbose and explicit to aid learning and correctness.
+| Data Structure | Status | Description | Supported Operations |
+|---------------|--------|-------------|----------------------|
+| **Singly Linked List** | ✅ Complete | Linear list with next-pointer only | Insert (head/tail), Delete, Search, Traverse, Cycle detection |
+| **Doubly Linked List** | ✅ Complete | Linear list with prev & next pointers | Insert, Delete, Forward/Backward traversal, Search |
+| **Stack (List-based)** | ✅ Complete | LIFO stack using Python list | Push, Pop, Peek, Is empty |
+| **Stack (Deque-based)** | ✅ Complete | LIFO stack using `collections.deque` | Push, Pop, Peek, Is empty |
+| **Stack (DLL-based)** | ✅ Complete | Stack using doubly linked list | Push, Pop, Peek, Invariant checks |
+| **Queue (List-based)** | ✅ Complete | FIFO queue using Python list | Enqueue, Dequeue, Peek, Is empty |
+| **Queue (Deque-based)** | ✅ Complete | FIFO queue using `collections.deque` | Enqueue, Dequeue, Peek, Is empty |
+| **Queue (DLL-based)** | ✅ Complete | Queue using doubly linked list | Enqueue, Dequeue, Peek, Invariant checks |
+| **Hash Table (List Buckets)** | ✅ Complete | Hash table with list-based chaining | Insert, Lookup, Delete, Resize handling |
+| **Hash Table (Linked List Buckets)** | ✅ Complete | Hash table with linked-list chaining | Insert, Lookup, Delete, Bucket traversal |
+| **Generic Tree (N-ary)** | ✅ Complete | Tree with multiple children per node | Insert, Delete, BFS, DFS, Parent tracking, Invariants |
+| **Binary Tree / BST** | ✅ Complete | Binary tree with BST ordering rules | Insert, Delete, Search, BFS, DFS, Height, Depth, Size |
+| **Graph (Undirected, Unweighted)** | ✅ Complete | Adjacency-list graph with bidirectional edges | Insert/Remove vertex & edge, BFS, DFS, Components, Cycle detection |
+| **Graph (Directed)** | ⏳ Planned | Graph with one-way edges | Insert/Remove vertex & edge, BFS, DFS, Indegree/Outdegree |
+| **Graph (DAG)** | ⏳ Planned | Directed acyclic graph | Topological sort, Cycle check, Path queries |
+| **Graph (Weighted)** | ⏳ Planned | Graph with edge weights | Shortest paths, Weighted traversal |
 
 ---
 
