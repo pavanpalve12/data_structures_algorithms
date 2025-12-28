@@ -34,7 +34,9 @@ Design Notes
 
 from graph.directed_graph import operations
 
-
+# ------------------------------------------------------------------
+# Class Graph: structure for graph
+# ------------------------------------------------------------------
 class Graph:
     """
     Directed Graph data container using adjacency list representation.
@@ -53,9 +55,9 @@ class Graph:
         """
         self.graph = {}
 
-    # ------------------------------------------------------------------
-    # Core Operations
-    # ------------------------------------------------------------------
+# ------------------------------------------------------------------
+# Core Operations
+# ------------------------------------------------------------------
     def insert_vertex(self, vertex):
         """
         Add a vertex to the graph.
@@ -94,9 +96,9 @@ class Graph:
         """
         return operations.remove_edge(self.graph, from_vertex, to_vertex)
 
-    # ------------------------------------------------------------------
-    # Traversals
-    # ------------------------------------------------------------------
+# ------------------------------------------------------------------
+# Traversals
+# ------------------------------------------------------------------
     def bfs_iterative(self, start_vertex):
         """
         Perform iterative Breadth-First Search (BFS).
@@ -113,7 +115,7 @@ class Graph:
         :param start_vertex: Starting vertex
         :return: BFS traversal order
         """
-        return operations.bfs_recursive(self.graph, start_vertex)
+        return operations.bfs_recursive(self.graph, start_vertex, [])
 
     def dfs_iterative(self, start_vertex):
         """
@@ -131,11 +133,11 @@ class Graph:
         :param start_vertex: Starting vertex
         :return: DFS traversal order
         """
-        return operations.dfs_recursive(self.graph, start_vertex)
+        return operations.dfs_recursive(self.graph, start_vertex, [])
 
-    # ------------------------------------------------------------------
-    # Graph Properties
-    # ------------------------------------------------------------------
+# ------------------------------------------------------------------
+# Graph Properties
+# ------------------------------------------------------------------
     def detect_cycle(self):
         """
         Detect whether the directed graph contains a cycle.
@@ -144,9 +146,9 @@ class Graph:
         """
         return operations.detect_cycle(self.graph)
 
-    # ------------------------------------------------------------------
-    # Utilities
-    # ------------------------------------------------------------------
+# ------------------------------------------------------------------
+# Utilities
+# ------------------------------------------------------------------
     def print_graph(self):
         """
         Print the adjacency list representation of the graph.
