@@ -112,9 +112,34 @@ E → []
 - A cycle exists if DFS encounters a node already in the **current recursion stack**
 - Parent-based cycle detection does **not** apply
 
-Example cycle:
-```
-A → B → C → A
+Example Graph:
+```text
+        A → B → C → D
+            ↑       ↓
+            F ← E ←-
+
+        G → H
+
+================ Directed Graph  =================
+	Graph [A] → [B]
+	Graph [B] → [C]
+	Graph [C] → [D]
+	Graph [D] → [E]
+	Graph [E] → [F]
+	Graph [F] → [B]
+	Graph [G] → [H]
+	Graph [H] → []
+==================================================
+------------------------------------------------------------
+------------------------ Traversals ------------------------
+BFS (Iterative) from A : ['A', 'B', 'C', 'D', 'E', 'F']
+BFS (Recursive) from A : ['A', 'B', 'C', 'D', 'E', 'F']
+DFS (Iterative) from A : ['A', 'B', 'C', 'D', 'E', 'F']
+DFS (Recursive) from A : ['A', 'B', 'C', 'D', 'E', 'F']
+------------------------------------------------------------
+--------------------- Graph Properties ---------------------
+Cycle Detected : True
+------------------------------------------------------------
 ```
 
 ------------------------------------------------------------------------------------
