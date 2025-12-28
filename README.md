@@ -80,7 +80,7 @@ This repository emphasizes **correctness, invariants, and separation of concerns
 | **Generic Tree (N-ary)** | ✅ Complete | Tree with multiple children per node | Insert, Delete, BFS, DFS, Parent tracking, Invariants |
 | **Binary Tree / BST** | ✅ Complete | Binary tree with BST ordering rules | Insert, Delete, Search, BFS, DFS, Height, Depth, Size |
 | **Graph (Undirected, Unweighted)** | ✅ Complete | Adjacency-list graph with bidirectional edges | Insert/Remove vertex & edge, BFS, DFS, Components, Cycle detection |
-| **Graph (Directed)** | ⏳ Planned | Graph with one-way edges | Insert/Remove vertex & edge, BFS, DFS, Indegree/Outdegree |
+| **Graph (Directed)** | ✅ Complete | Graph with one-way edges | Insert/Remove vertex & edge, BFS, DFS, Indegree/Outdegree |
 | **Graph (DAG)** | ⏳ Planned | Directed acyclic graph | Topological sort, Cycle check, Path queries |
 | **Graph (Weighted)** | ⏳ Planned | Graph with edge weights | Shortest paths, Weighted traversal |
 
