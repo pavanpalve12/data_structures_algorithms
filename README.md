@@ -65,24 +65,25 @@ This repository emphasizes **correctness, invariants, and separation of concerns
 ---
 ## 🧱 Current Implementations — Unified Summary
 
-| Data Structure | Status | Description | Supported Operations |
-|---------------|--------|-------------|----------------------|
-| **Singly Linked List** | ✅ Complete | Linear list with next-pointer only | Insert (head/tail), Delete, Search, Traverse, Cycle detection |
-| **Doubly Linked List** | ✅ Complete | Linear list with prev & next pointers | Insert, Delete, Forward/Backward traversal, Search |
-| **Stack (List-based)** | ✅ Complete | LIFO stack using Python list | Push, Pop, Peek, Is empty |
-| **Stack (Deque-based)** | ✅ Complete | LIFO stack using `collections.deque` | Push, Pop, Peek, Is empty |
-| **Stack (DLL-based)** | ✅ Complete | Stack using doubly linked list | Push, Pop, Peek, Invariant checks |
-| **Queue (List-based)** | ✅ Complete | FIFO queue using Python list | Enqueue, Dequeue, Peek, Is empty |
-| **Queue (Deque-based)** | ✅ Complete | FIFO queue using `collections.deque` | Enqueue, Dequeue, Peek, Is empty |
-| **Queue (DLL-based)** | ✅ Complete | Queue using doubly linked list | Enqueue, Dequeue, Peek, Invariant checks |
-| **Hash Table (List Buckets)** | ✅ Complete | Hash table with list-based chaining | Insert, Lookup, Delete, Resize handling |
+| Data Structure                       | Status | Description | Supported Operations |
+|--------------------------------------|--------|-------------|----------------------|
+| **Singly Linked List**               | ✅ Complete | Linear list with next-pointer only | Insert (head/tail), Delete, Search, Traverse, Cycle detection |
+| **Doubly Linked List**               | ✅ Complete | Linear list with prev & next pointers | Insert, Delete, Forward/Backward traversal, Search |
+| **Stack (List-based)**               | ✅ Complete | LIFO stack using Python list | Push, Pop, Peek, Is empty |
+| **Stack (Deque-based)**              | ✅ Complete | LIFO stack using `collections.deque` | Push, Pop, Peek, Is empty |
+| **Stack (DLL-based)**                | ✅ Complete | Stack using doubly linked list | Push, Pop, Peek, Invariant checks |
+| **Queue (List-based)**               | ✅ Complete | FIFO queue using Python list | Enqueue, Dequeue, Peek, Is empty |
+| **Queue (Deque-based)**              | ✅ Complete | FIFO queue using `collections.deque` | Enqueue, Dequeue, Peek, Is empty |
+| **Queue (DLL-based)**                | ✅ Complete | Queue using doubly linked list | Enqueue, Dequeue, Peek, Invariant checks |
+| **Hash Table (List Buckets)**        | ✅ Complete | Hash table with list-based chaining | Insert, Lookup, Delete, Resize handling |
 | **Hash Table (Linked List Buckets)** | ✅ Complete | Hash table with linked-list chaining | Insert, Lookup, Delete, Bucket traversal |
-| **Generic Tree (N-ary)** | ✅ Complete | Tree with multiple children per node | Insert, Delete, BFS, DFS, Parent tracking, Invariants |
-| **Binary Tree / BST** | ✅ Complete | Binary tree with BST ordering rules | Insert, Delete, Search, BFS, DFS, Height, Depth, Size |
-| **Graph (Undirected, Unweighted)** | ✅ Complete | Adjacency-list graph with bidirectional edges | Insert/Remove vertex & edge, BFS, DFS, Components, Cycle detection |
-| **Graph (Directed)** | ✅ Complete | Graph with one-way edges | Insert/Remove vertex & edge, BFS, DFS, Indegree/Outdegree |
-| **Graph (DAG)** | ✅ Complete | Directed acyclic graph | Topological sort, Cycle check, Path queries |
-| **Graph (Weighted)** | ⏳ Planned | Graph with edge weights | Shortest paths, Weighted traversal |
+| **Generic Tree (N-ary)**             | ✅ Complete | Tree with multiple children per node | Insert, Delete, BFS, DFS, Parent tracking, Invariants |
+| **Binary Tree / BST**                | ✅ Complete | Binary tree with BST ordering rules | Insert, Delete, Search, BFS, DFS, Height, Depth, Size |
+| **Graph (Undirected, Unweighted)**   | ✅ Complete | Adjacency-list graph with bidirectional edges | Insert/Remove vertex & edge, BFS, DFS, Components, Cycle detection |
+| **Graph (Directed)**                 | ✅ Complete | Graph with one-way edges | Insert/Remove vertex & edge, BFS, DFS, Indegree/Outdegree |
+| **Graph (DAG)**                      | ✅ Complete | Directed acyclic graph | Topological sort, Cycle check, Path queries |
+| **Graph (Weighted, Undirected)**     | ✅ Complete | Graph with edge weights | Shortest paths, Weighted traversal |
+| **Graph (Weighted, Directed)**       | ✅ Complete | Graph with edge weights | Shortest paths, Weighted traversal |
 
 ---
 
