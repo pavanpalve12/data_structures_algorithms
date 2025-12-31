@@ -62,18 +62,22 @@ class Graph:
         """Check whether the graph satisfies DAG invariant."""
         return operations.is_dag(self.graph)
 
-    def topological_sort(self):
+    def kahn_topological_sort(self):
         """Return a topological ordering of vertices."""
-        return operations.topological_sort(self.graph)
+        return operations.kahn_topological_sort(self.graph)
+
+    def dfs_topological_sort(self, start_vertex):
+        """Return a topological ordering of vertices."""
+        return operations.dfs_topological_sort(self.graph, start_vertex)
 
 # ------------------------------------------------------------------
 # Traversals
 # ------------------------------------------------------------------
     def bfs(self, start_vertex):
-        return operations.bfs(graph=self.graph, start_vertex=start_vertex)
+        return operations.bfs(self.graph, start_vertex, [])
 
     def dfs(self, start_vertex):
-        return operations.dfs(graph=self.graph, start_vertex=start_vertex)
+        return operations.dfs(self.graph, start_vertex,[])
 
 # ------------------------------------------------------------------
 # Utilities

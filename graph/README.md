@@ -151,7 +151,65 @@ Cycle Detected : True
 ```
 
 ---
+## Implementation 3: Directed Acyclic Graph (DAG)
 
+### Key Characteristics
+- Edges are **one-way** (u → v)
+- **No cycles allowed** (acyclic by definition)
+- Adjacency list is **asymmetric**
+- Vertex ordering must respect **dependency direction**
+
+### Operation Semantics
+
+| Operation | Behavior |
+|---------|----------|
+| `insert_edge(u, v)` | Adds u → v **only if it does not create a cycle** |
+| `remove_edge(u, v)` | Removes u → v |
+| `bfs / dfs` | Traverses outgoing neighbors only |
+| `detect_cycle` | Used to **enforce DAG invariant** |
+| `topological_sort (Kahn)` | Level / dependency-based ordering |
+| `topological_sort (DFS)` | Depth-based ordering (reverse postorder) |
+
+---
+
+## Sample Output Representation
+
+## Example Graph
+
+```text
+Sample Graph
+A → B → D → F
+|    |
+↓    ↓
+C    E
+
+G → H
+```
+### Output
+```text
+---------------------- DAG Structure -----------------------
+============= Directed Acyclic Graph =============
+	A → ['B', 'C']
+	B → ['D', 'E']
+	C → []
+	D → ['F']
+	E → []
+	F → []
+	G → ['H']
+	H → []
+==================================================
+------------------------------------------------------------
+------------------------ Traversals ------------------------
+BFS from A : ['A', 'B', 'C', 'D', 'E', 'F']
+DFS from A : ['A', 'B', 'D', 'F', 'E', 'C']
+------------------------------------------------------------
+---------------------- DAG Properties ----------------------
+Is DAG                : True
+Topological Sort (Kahn): ['A', 'G', 'B', 'C', 'H', 'D', 'E', 'F']
+Topological Sort (DFS) : ['A', 'B', 'D', 'F', 'E', 'C']
+------------------------------------------------------------
+```
+---
 ## Structural Design (Common to All Graphs)
 
 All graph implementations follow the same architecture:
@@ -173,19 +231,30 @@ graph/<variant>/
 
 ## Summary Comparison
 
-| Aspect | Undirected Graph | Directed Graph |
-|------|------------------|----------------|
-| Edge Direction | Bidirectional | One-way |
-| Adjacency List | Symmetric | Asymmetric |
-| BFS / DFS | Same logic | Same logic |
-| Cycle Detection | Parent-based | Recursion stack |
-| Components | Connected components | Reachability-based |
+## Graph Variants — Comparison Summary
+
+| Feature / Property | Undirected Graph | Directed Graph | Directed Acyclic Graph (DAG) |
+|-------------------|------------------|----------------|------------------------------|
+| Edge Direction | Bidirectional (u ↔ v) | One-way (u → v) | One-way (u → v) |
+| Cycles Allowed | ✅ Allowed | ✅ Allowed | ❌ Not Allowed |
+| Adjacency List | Symmetric | Asymmetric | Asymmetric |
+| Vertex Insert | Explicit or edge-driven | Explicit or edge-driven | Explicit or edge-driven |
+| Edge Insert | Adds both directions | Adds one direction | Adds only if no cycle |
+| Edge Remove | Removes both directions | Removes one direction | Removes one direction |
+| Traversal Scope | All neighbors | Outgoing neighbors only | Outgoing neighbors only |
+| BFS / DFS | Same logic | Same logic (direction-aware) | Same logic (direction-aware) |
+| Cycle Detection Rule | Visited node ≠ parent | Back-edge in recursion path | Back-edge (must never exist) |
+| Cycle Detection Purpose | Property check | Property check | **Invariant enforcement** |
+| Connected Components | Supported | Not meaningful | Not meaningful |
+| Reachability | Mutual | Directional | Directional |
+| Topological Sort | ❌ Not applicable | ❌ Not guaranteed | ✅ Mandatory |
+| Kahn’s Algorithm | ❌ | ❌ | ✅ |
+| DFS Topo Sort | ❌ | ❌ | ✅ |
+| Typical Use Cases | Networks, maps | Workflows, flows | Build systems, schedulers |
 
 ---
-
 ## Future Graph Variants (Planned)
 
-- Directed Acyclic Graph (DAG)
 - Weighted Graph
 - Strongly Connected Components (SCC)
 - Topological Sorting
