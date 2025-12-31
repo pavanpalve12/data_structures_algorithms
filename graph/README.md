@@ -7,6 +7,8 @@ Currently, the repository includes:
 
 1. **Undirected, Unweighted Graph**
 2. **Directed, Unweighted Graph**
+3. **Undirected, Weighted Graph**
+4. **Directed, Weighted Graph**
 
 Future graph variants will extend this foundation without changing the
 core conceptual model.
@@ -150,8 +152,141 @@ Cycle Detected : True
 ------------------------------------------------------------
 ```
 
+------------------------------------------------------------------------------------
+
+## Implementation 3: Undirected, Weighted Graph
+
+### Key Characteristics
+- Edges are **bidirectional** (u ↔ v)
+- Each edge has an associated **weight**
+- Adjacency list stores `(neighbor, weight)` tuples
+- Traversals are **weight-agnostic**
+
+### Operation Semantics
+
+| Operation | Behavior |
+|---------|----------|
+| `insert_edge(u, v, w)` | Adds u ↔ v with weight w |
+| `update_edge_weight` | Updates weight on both directions |
+| `remove_edge(u, v)` | Removes both directions |
+| `get_path_cost(path)` | Sum of weights along path |
+| `shortest_path_dijkstra` | Computes shortest paths |
+
 ---
-## Implementation 3: Directed Acyclic Graph (DAG)
+## Sample Output Representation
+### Sample Graph
+```text
+         A
+       / | \
+     4/  |  \2
+     B  1|   C
+      \  |  /
+      5\ | /3
+         D
+
+        E — F
+```
+### Sample Output
+```text
+----------------- Weighted Graph Structure -----------------
+=========== Undirected Weighted Graph ============
+	Graph [A] → [('B', 4), ('C', 2), ('D', 1)]
+	Graph [B] → [('A', 4), ('D', 5)]
+	Graph [C] → [('A', 2), ('D', 3)]
+	Graph [D] → [('B', 5), ('C', 3), ('A', 1)]
+	Graph [E] → [('F', 7)]
+	Graph [F] → [('E', 7)]
+==================================================
+------------------------------------------------------------
+--------------- Traversals (Weights Ignored) ---------------
+BFS (Iterative) from A : ['A', 'B', 'C', 'D']
+BFS (Recursive) from A : ['A', 'B', 'C', 'D']
+DFS (Iterative) from A : ['A', 'D', 'C', 'B']
+DFS (Recursive) from A : ['A', 'B', 'D', 'C']
+------------------------------------------------------------
+--------------------- Graph Properties ---------------------
+Connected Components : 2
+Cycle Detected       : True
+------------------------------------------------------------
+--------------------- Path Cost Tests ----------------------
+Path           : ['A', 'D', 'C']
+Total Cost     : 4
+------------------------------------------------------------
+----------------- Shortest Path (Dijkstra) -----------------
+Distances from A : {'A': 0, 'B': 4, 'C': 2, 'D': 1, 'E': inf, 'F': inf}
+Shortest Path A → D : ['A', 'B']
+------------------------------------------------------------
+```
+
+------------------------------------------------------------------------------------
+
+## Implementation 4: Directed, Weighted Graph
+
+### Key Characteristics
+- Edges are **one-way** (u → v)
+- Each edge has an associated **weight**
+- Adjacency list stores `(neighbor, weight)` tuples
+- Traversal and shortest paths follow **edge direction**
+
+### Operation Semantics
+
+| Operation | Behavior |
+|---------|----------|
+| `insert_edge(u, v, w)` | Adds directed edge u → v with weight w |
+| `update_edge_weight` | Updates weight for u → v only |
+| `remove_edge(u, v)` | Removes directed edge u → v |
+| `get_path_cost(path)` | Sum of weights along directed path |
+| `shortest_path_dijkstra` | Computes shortest directed paths |
+
+---
+## Sample Output Representation
+### Sample Graph
+```text
+        (4)
+   A --------▶ B
+   | \         |
+ (2)|  \(1)    |(5)
+   |    \      |
+   ▼     ▼     ▼
+   C --------▶ D
+        (3)
+
+
+   E --------▶ F
+        (7)
+```
+
+### Sample Output
+```text
+------------ Directed Weighted Graph Structure -------------
+============ Directed Weighted Graph =============
+	Graph [A] → [('B', 4), ('C', 2), ('D', 1)]
+	Graph [B] → [('D', 5)]
+	Graph [C] → [('D', 3)]
+	Graph [D] → []
+	Graph [E] → [('F', 7)]
+	Graph [F] → []
+==================================================
+------------------------------------------------------------
+--------------- Traversals (Direction-Aware) ---------------
+BFS (Iterative) from A : ['A', 'B', 'C', 'D']
+BFS (Recursive) from A : ['A', 'B', 'C', 'D']
+DFS (Iterative) from A : ['A', 'D', 'C', 'B']
+DFS (Recursive) from A : ['A', 'B', 'D', 'C']
+------------------------------------------------------------
+--------------------- Path Cost Tests ----------------------
+Path       : ['A', 'D']
+Total Cost : 1
+------------------------------------------------------------
+----------------- Shortest Path (Dijkstra) -----------------
+Distances from A : {'A': 0, 'B': 4, 'C': 2, 'D': 1, 'E': inf, 'F': inf}
+Shortest Path A → D : ['A', 'D']
+------------------------------------------------------------
+```
+
+------------------------------------------------------------------------------------
+
+## Implementation 5: Directed Acyclic Graph (DAG)
 
 ### Key Characteristics
 - Edges are **one-way** (u → v)
@@ -171,11 +306,8 @@ Cycle Detected : True
 | `topological_sort (DFS)` | Depth-based ordering (reverse postorder) |
 
 ---
-
-## Sample Output Representation
-
-## Example Graph
-
+## Sample Output
+### Sample Graph
 ```text
 Sample Graph
 A → B → D → F
@@ -233,32 +365,25 @@ graph/<variant>/
 
 ## Graph Variants — Comparison Summary
 
-| Feature / Property | Undirected Graph | Directed Graph | Directed Acyclic Graph (DAG) |
-|-------------------|------------------|----------------|------------------------------|
-| Edge Direction | Bidirectional (u ↔ v) | One-way (u → v) | One-way (u → v) |
-| Cycles Allowed | ✅ Allowed | ✅ Allowed | ❌ Not Allowed |
-| Adjacency List | Symmetric | Asymmetric | Asymmetric |
-| Vertex Insert | Explicit or edge-driven | Explicit or edge-driven | Explicit or edge-driven |
-| Edge Insert | Adds both directions | Adds one direction | Adds only if no cycle |
-| Edge Remove | Removes both directions | Removes one direction | Removes one direction |
-| Traversal Scope | All neighbors | Outgoing neighbors only | Outgoing neighbors only |
-| BFS / DFS | Same logic | Same logic (direction-aware) | Same logic (direction-aware) |
-| Cycle Detection Rule | Visited node ≠ parent | Back-edge in recursion path | Back-edge (must never exist) |
-| Cycle Detection Purpose | Property check | Property check | **Invariant enforcement** |
-| Connected Components | Supported | Not meaningful | Not meaningful |
-| Reachability | Mutual | Directional | Directional |
-| Topological Sort | ❌ Not applicable | ❌ Not guaranteed | ✅ Mandatory |
-| Kahn’s Algorithm | ❌ | ❌ | ✅ |
-| DFS Topo Sort | ❌ | ❌ | ✅ |
-| Typical Use Cases | Networks, maps | Workflows, flows | Build systems, schedulers |
+| Feature / Property | Undirected Graph | Directed Graph | Undirected Weighted | Directed Weighted | DAG |
+|-------------------|------------------|----------------|---------------------|-------------------|-----|
+| Edge Direction | Bidirectional (u ↔ v) | One-way (u → v) | Bidirectional (u ↔ v) | One-way (u → v) | One-way (u → v) |
+| Weights | ❌ | ❌ | ✅ | ✅ | ❌ |
+| Cycles Allowed | ✅ Allowed | ✅ Allowed | ✅ Allowed | ✅ Allowed | ❌ Not Allowed |
+| Adjacency List | Symmetric | Asymmetric | Symmetric | Asymmetric | Asymmetric |
+| Traversal Scope | All neighbors | Outgoing neighbors only | All neighbors | Outgoing neighbors only | Outgoing neighbors only |
+| Shortest Path | ❌ | ❌ | ✅ | ✅ | ❌ |
+| Connected Components | Supported | Not meaningful | Supported | Not meaningful | Not meaningful |
+| Topological Sort | ❌ Not applicable | ❌ Not guaranteed | ❌ Not applicable | ❌ Not applicable | ✅ Mandatory |
 
 ---
+
 ## Future Graph Variants (Planned)
 
-- Weighted Graph
+- Bellman–Ford (negative weights)
+- Floyd–Warshall (all-pairs shortest path)
 - Strongly Connected Components (SCC)
-- Topological Sorting
-- Shortest Path Algorithms
+- Minimum Spanning Tree (MST)
 
 ---
 
